@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Privacy Policy — BookLove</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+  <header class="site">
+    <span class="mark" aria-hidden="true">📖</span>
+    <span class="name">BookLove</span>
+  </header>
+
+  <main>
+    <h1>Privacy Policy</h1>
+    <p class="updated">Last updated: 2 July 2026</p>
+
+    <p class="summary">
+      <strong>Short version:</strong> BookLove has no accounts and no server of
+      our own. Your library lives on your iPhone and in your own private iCloud.
+      We never see it. We do not sell data, show ads, or track you across apps.
+      The only data that leaves your device is what is technically required to
+      search for books, sync your own iCloud, process a subscription, and count
+      anonymous usage — all described in full below.
+    </p>
+
+    <h2>1. Who we are</h2>
+    <p>
+      BookLove (“the app”, “we”, “us”) is a personal reading-tracker app for
+      iPhone and iPad developed by Vitalii Volynets (“the developer”). This
+      Privacy Policy explains what happens to information when you use the app.
+      Contact: <a href="mailto:volynetsvitalii82@gmail.com">volynetsvitalii82@gmail.com</a>.
+    </p>
+
+    <h2>2. Our core principle: privacy by design</h2>
+    <p>
+      BookLove is built without its own backend. There is no BookLove account,
+      no login, and no BookLove-operated server that stores your books. Your
+      reading library, shelves, ratings, reading goals and settings are stored
+      <strong>locally on your device</strong> and, if you enable iCloud, in
+      <strong>your own private iCloud account</strong> — which only you can access.
+    </p>
+
+    <h2>3. Information we do NOT collect</h2>
+    <ul>
+      <li>We do <strong>not</strong> ask for your name, email address, or phone number.</li>
+      <li>We do <strong>not</strong> collect your location.</li>
+      <li>We do <strong>not</strong> use the advertising identifier (IDFA) and we
+          do <strong>not</strong> show ads.</li>
+      <li>We do <strong>not</strong> track you across other apps or websites, and
+          the app does not request App Tracking Transparency permission.</li>
+      <li>We do <strong>not</strong> sell or rent any information to anyone.</li>
+    </ul>
+
+    <h2>4. Information stored on your device</h2>
+    <p>
+      Everything you create in BookLove — the books on your shelves, personal
+      ratings, reading goals, import history and app preferences — is stored on
+      your device using Apple’s on-device database (SwiftData) and standard app
+      settings storage. This data never leaves your device except through the
+      services described in Sections 5–8.
+    </p>
+
+    <h2>5. iCloud sync (Apple CloudKit)</h2>
+    <p>
+      If you are signed in to iCloud and have iCloud enabled for BookLove, your
+      library is synced across your own Apple devices through Apple’s
+      <strong>CloudKit private database</strong>. This data is stored in
+      <strong>your</strong> iCloud account, controlled by you, and hosted by
+      Apple. <strong>The developer cannot see or access it.</strong> Its handling
+      is governed by
+      <a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener">Apple’s Privacy Policy</a>
+      and iCloud terms. If you turn off iCloud, the app works fully offline with
+      on-device data only.
+    </p>
+
+    <h2>6. Book search (third-party book databases)</h2>
+    <p>
+      To find books and fetch their details (title, author, cover image,
+      description, publisher, community rating), the app queries public book
+      databases. When you search or scan an ISBN, the app sends your
+      <strong>search text or the scanned ISBN</strong> to these services so they
+      can return matching books:
+    </p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Service</th><th>What is sent</th><th>Their privacy policy</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Google Books API</td>
+            <td>Your search query or ISBN, and the app’s bundle identifier</td>
+            <td><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a></td>
+          </tr>
+          <tr>
+            <td>Open Library (Internet Archive)</td>
+            <td>Your search query or ISBN</td>
+            <td><a href="https://archive.org/about/terms.php" target="_blank" rel="noopener">archive.org terms &amp; privacy</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      We do not attach your identity to these requests, and the app deliberately
+      does <strong>not</strong> send your library, your Apple ID, or which books
+      you own — only the individual search term needed to get results. Book cover
+      images are loaded directly from these services’ image servers.
+    </p>
+
+    <h2>7. Camera (barcode scanning)</h2>
+    <p>
+      With your permission, BookLove uses the camera to scan the barcode (ISBN)
+      on a book. Camera frames are processed <strong>on your device</strong> to
+      read the number. Images are <strong>never uploaded</strong> or stored by us;
+      only the decoded ISBN is used, and only to look up the book (Section 6).
+    </p>
+
+    <h2>8. Anonymous usage analytics (TelemetryDeck)</h2>
+    <p>
+      To understand which features are used and to fix problems, the app sends a
+      small amount of <strong>anonymous</strong> usage data through
+      <a href="https://telemetrydeck.com/privacy/" target="_blank" rel="noopener">TelemetryDeck</a>,
+      a privacy-first analytics service that does not use the advertising
+      identifier and is GDPR-compliant. Events are limited to actions such as
+      “app launched”, “a book was added to a shelf”, “a search was performed”,
+      “a rating was set”, and “a reading goal was set”.
+    </p>
+    <p>
+      These events <strong>never include personal or book-identifying data</strong>.
+      For example, the search event records only that a search happened, not
+      <em>what</em> you searched for; the rating event records only the star value
+      (rounded to a half-star), not which book. TelemetryDeck generates an
+      anonymous, non-reversible identifier and cannot be used to identify you.
+    </p>
+
+    <h2>9. Subscriptions (RevenueCat &amp; Apple)</h2>
+    <p>
+      Optional premium features are offered through an in-app subscription.
+      Purchases are handled by Apple’s App Store. We use
+      <a href="https://www.revenuecat.com/privacy/" target="_blank" rel="noopener">RevenueCat</a>
+      to manage subscription status and restore purchases. RevenueCat receives
+      purchase/receipt information and an anonymous subscriber identifier — not
+      your name, email, or payment card. All billing is handled by Apple under
+      <a href="https://www.apple.com/legal/internet-services/itunes/" target="_blank" rel="noopener">Apple’s Media Services Terms</a>.
+      We never see your payment details.
+    </p>
+
+    <h2>10. Children</h2>
+    <p>
+      BookLove is not directed at children under 13 and does not knowingly
+      collect personal information from children. Because the app collects no
+      personal profile at all, no such data is gathered from anyone.
+    </p>
+
+    <h2>11. Your rights and control</h2>
+    <p>
+      Because your data lives on your device and in your own iCloud, you are in
+      control at all times:
+    </p>
+    <ul>
+      <li><strong>Access / export:</strong> export your entire library as CSV or
+          JSON at any time from Settings → Data.</li>
+      <li><strong>Deletion:</strong> delete individual books, clear all data in
+          Settings, or delete the app to remove on-device data. Data synced to
+          your iCloud is managed by you in iOS Settings → your name → iCloud.</li>
+    </ul>
+    <p>
+      If you are in a region covered by the GDPR (EU/UK) or CCPA (California),
+      these controls satisfy your rights of access, portability and erasure. We
+      hold no personal data on any server of ours to correct or delete. Questions:
+      <a href="mailto:volynetsvitalii82@gmail.com">volynetsvitalii82@gmail.com</a>.
+    </p>
+
+    <h2>12. Data retention</h2>
+    <p>
+      We do not retain your data, because we do not store it. On-device and
+      iCloud data persists until you delete it. Anonymous analytics are retained
+      by TelemetryDeck according to their policy; subscription records are
+      retained by Apple and RevenueCat according to theirs.
+    </p>
+
+    <h2>13. Security</h2>
+    <p>
+      Network requests (book search, cover images) use HTTPS. Your library is
+      protected by your device’s and iCloud account’s built-in security (device
+      passcode, Face ID/Touch ID, and Apple’s iCloud encryption).
+    </p>
+
+    <h2>14. International users</h2>
+    <p>
+      The third-party services above (Apple, Google, Internet Archive,
+      TelemetryDeck, RevenueCat) may process the limited data described here on
+      servers located in other countries, under their own privacy policies linked
+      throughout this document.
+    </p>
+
+    <h2>15. Changes to this policy</h2>
+    <p>
+      If this policy changes, we will update the date at the top and post the new
+      version at this address. Material changes will also be reflected in a new
+      app release.
+    </p>
+
+    <h2>16. Contact</h2>
+    <p>
+      Questions about privacy? Email
+      <a href="mailto:volynetsvitalii82@gmail.com">volynetsvitalii82@gmail.com</a>.
+    </p>
+
+    <nav class="legal-links">
+      <a href="index.html">← Home</a>
+      <a href="terms.html">Terms of Use →</a>
+    </nav>
+  </main>
+
+  <footer class="site">
+    © 2026 BookLove. Made with care for readers.
+  </footer>
+
+</body>
+</html>

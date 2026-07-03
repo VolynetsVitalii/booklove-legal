@@ -1,0 +1,161 @@
+/* style.css — общий стиль юридических страниц BookLove (GitHub Pages).
+   T-143. Один файл на все три страницы (index / privacy / terms).
+
+   Принципы:
+   - Никаких внешних шрифтов/скриптов/картинок → страница грузится мгновенно
+     и работает офлайн-подобно (privacy-first даже в оформлении).
+   - Системный шрифт (San Francisco на iOS/macOS, Segoe на Windows и т.д.).
+   - Тёмная тема через prefers-color-scheme (совпадает с Dark Mode приложения, T-081).
+   - Максимальная ширина текста ~720px — комфортная длина строки для чтения. */
+
+/* ── Токены цвета: светлая тема ─────────────────────────────────────────── */
+:root {
+  --bg: #f7f8fb;          /* фон страницы — очень светлый серо-голубой */
+  --surface: #ffffff;     /* карточка контента */
+  --text: #1a2233;        /* основной текст — почти чёрный с синевой (бренд navy) */
+  --muted: #5b6577;       /* второстепенный текст (даты, подписи) */
+  --accent: #2f5bd0;      /* акцент/ссылки — фирменный синий BookLove */
+  --border: #e3e7ef;      /* тонкие разделители */
+  --radius: 14px;         /* скругление карточки */
+}
+
+/* ── Токены цвета: тёмная тема (авто по системной настройке) ─────────────── */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0e1524;
+    --surface: #161f33;
+    --text: #eef1f7;
+    --muted: #9aa6bd;
+    --accent: #7aa2ff;
+    --border: #26324b;
+  }
+}
+
+/* ── Базовый сброс/типографика ──────────────────────────────────────────── */
+* { box-sizing: border-box; }                 /* padding не растягивает ширину */
+
+html { -webkit-text-size-adjust: 100%; }        /* iOS не масштабирует текст сам */
+
+body {
+  margin: 0;
+  padding: 24px 16px 64px;                       /* воздух по краям, много снизу */
+  background: var(--bg);
+  color: var(--text);
+  /* Системный шрифт: сначала пробуем шрифт ОС, потом безопасные запасные. */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+               Helvetica, Arial, sans-serif;
+  line-height: 1.65;                             /* просторный межстрочный интервал */
+  font-size: 17px;                               /* как body text в iOS */
+}
+
+/* Карточка контента по центру, ограниченной ширины. */
+main {
+  max-width: 720px;
+  margin: 0 auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 32px 28px;
+}
+
+/* ── Шапка (логотип-текст + название) ───────────────────────────────────── */
+header.site {
+  max-width: 720px;
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+header.site .mark {                              /* «значок» из эмодзи-сердца книги */
+  font-size: 26px;
+  line-height: 1;
+}
+header.site .name {
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: 0.2px;
+}
+
+/* ── Заголовки ──────────────────────────────────────────────────────────── */
+h1 {
+  font-size: 28px;
+  line-height: 1.25;
+  margin: 0 0 4px;
+}
+h2 {
+  font-size: 20px;
+  margin: 32px 0 8px;
+  padding-top: 8px;
+}
+h3 {
+  font-size: 17px;
+  margin: 20px 0 4px;
+}
+
+/* Подпись «последнее обновление» под H1. */
+.updated {
+  color: var(--muted);
+  font-size: 15px;
+  margin: 0 0 8px;
+}
+
+/* Короткое резюме в рамке-«плашке» вверху документа. */
+.summary {
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin: 16px 0 8px;
+  font-size: 16px;
+}
+
+/* ── Текст, списки, ссылки ──────────────────────────────────────────────── */
+p { margin: 10px 0; }
+
+ul { margin: 10px 0; padding-left: 22px; }
+li { margin: 6px 0; }
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+a:hover, a:focus { text-decoration: underline; }
+
+strong { font-weight: 650; }
+
+/* Таблица (используется в разделе «третьи стороны»). Прокручивается на узких
+   экранах, чтобы страница не «ехала» горизонтально. */
+.table-wrap { overflow-x: auto; margin: 12px 0; }
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 15px;
+  min-width: 480px;                              /* ниже — включается горизонт. скролл */
+}
+th, td {
+  text-align: left;
+  vertical-align: top;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+}
+th { color: var(--muted); font-weight: 600; }
+
+/* ── Навигация между страницами (низ карточки) ──────────────────────────── */
+nav.legal-links {
+  margin-top: 28px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-size: 15px;
+}
+
+/* ── Подвал ─────────────────────────────────────────────────────────────── */
+footer.site {
+  max-width: 720px;
+  margin: 20px auto 0;
+  text-align: center;
+  color: var(--muted);
+  font-size: 14px;
+}
