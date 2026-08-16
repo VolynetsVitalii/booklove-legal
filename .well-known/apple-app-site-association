@@ -1,0 +1,23 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["8MZT9FWMM3.com.vitaliivolynets.BookLove"],
+        "components": [
+          {
+            "/": "/b/*",
+            "comment": "Book by ISBN — opens the book in BooksLove"
+          },
+          {
+            "/": "/wrapped/*",
+            "comment": "Shared reading wrapped card"
+          },
+          {
+            "/": "/club/*",
+            "comment": "Club invite code"
+          }
+        ]
+      }
+    ]
+  }
+}
