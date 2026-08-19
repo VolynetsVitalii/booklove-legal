@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<!--
+  wrapped.html — посадочная страница deep-link'а /wrapped. T-230.
+
+  ── КТО СЮДА ПОПАДАЕТ ───────────────────────────────────────────────────────
+  Человек, которому прислали карточку Monthly Wrapped (T-072 / T-202), нажал на
+  ссылку и НЕ имеет приложения. У него один вопрос: «что это мне прислали».
+  Страница отвечает на него в первом же абзаце и только потом предлагает
+  установку — обратный порядок читается как подмена и закрывается сразу.
+
+  ── ЧЕГО ЗДЕСЬ НЕТ ──────────────────────────────────────────────────────────
+  Самой карточки. Она никуда не загружается: `ShareCardRenderer` собирает
+  картинку НА УСТРОЙСТВЕ и отдаёт её системному листу отправки. Сервера у нас
+  нет, хранить её негде, и это ровно то поведение, которое обещает TrustPolicy.
+  Поэтому страница объясняет, что за карточка, а не показывает чужую.
+
+  Роутер `404.html` приводит сюда адреса вида /wrapped/<id>.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Monthly Wrapped — your reading month as a card — BooksLove</title>
+  <meta name="description" content="Someone shared a BooksLove Wrapped card with you. Here is what it is: a picture of a reading month, made on their device and never uploaded anywhere.">
+  <link rel="canonical" href="https://volynetsvitalii.github.io/booklove-legal/wrapped.html">
+
+  <meta name="apple-itunes-app" content="app-id=6761546582">
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="BooksLove">
+  <meta property="og:title" content="Monthly Wrapped — your reading month as a card">
+  <meta property="og:description" content="Books finished, pages turned, the month in one picture. Made on your device, never uploaded.">
+  <meta property="og:url" content="https://volynetsvitalii.github.io/booklove-legal/wrapped.html">
+  <meta property="og:image" content="https://volynetsvitalii.github.io/booklove-legal/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Monthly Wrapped — your reading month as a card">
+  <meta name="twitter:description" content="Books finished, pages turned, the month in one picture.">
+  <meta name="twitter:image" content="https://volynetsvitalii.github.io/booklove-legal/assets/og.png">
+
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0b1120" media="(prefers-color-scheme: dark)">
+
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icon.png">
+  <link rel="stylesheet" href="assets/landing.css">
+  <script defer src="assets/landing.js"></script>
+</head>
+
+<body>
+
+<nav class="nav">
+  <div class="wrap nav__inner">
+    <a class="nav__brand" href="./"><img src="assets/icon.png" width="30" height="30" alt="">BooksLove</a>
+    <div class="nav__links">
+      <a href="./">Home</a>
+      <a href="reading-tracker.html">Reading tracker</a>
+      <a href="import-from-goodreads.html">Import guide</a>
+    </div>
+    <div class="nav__cta">
+      <a class="btn" href="https://apps.apple.com/app/id6761546582?ct=web_wrapped_nav&amp;mt=8">Get the app</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+<section class="section">
+  <div class="wrap">
+    <div class="article">
+      <p class="eyebrow">Monthly Wrapped</p>
+      <h1>Somebody sent you their reading month</h1>
+      <p class="lede" style="max-width: none;">
+        A Wrapped card is one picture summing up a month of reading: the books
+        finished, the pages turned, the average rating, the best day. BooksLove
+        builds it from a reading log that lives entirely on its owner's device.
+      </p>
+      <p>
+        The card itself is not stored here, and it never was. It is drawn on the
+        phone that made it and handed straight to whatever app sent it to you.
+        There is no BooksLove server holding a copy, because there is no
+        BooksLove server at all.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="section section--alt">
+  <div class="wrap">
+    <div class="feature reveal">
+      <div>
+        <h2>Where the numbers come from</h2>
+        <p class="lede">Everything on the card is calculated from books the
+        owner marked as finished, and the reading sessions they logged.</p>
+        <ul class="ticks">
+          <li>Books finished in the month, with their covers</li>
+          <li>Pages turned, taken from recorded reading sessions</li>
+          <li>Average rating, on the half-star scale the app uses</li>
+          <li>The longest streak of consecutive reading days</li>
+          <li>The genres the month leaned towards</li>
+        </ul>
+        <p>
+          Any book can be marked so that it never appears on a shareable card —
+          the reading log is a personal document, and some of it is nobody
+          else's business.
+        </p>
+      </div>
+      <div class="feature__media">
+        <div class="phone phone--tilt">
+          <div class="phone__screen">
+            <img src="assets/screens/stats.jpg" width="640" height="1391" loading="lazy"
+                 alt="The statistics screen the Wrapped card is built from">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="cta reveal">
+      <h2>Make your own</h2>
+      <p class="lede" style="margin: 0 auto 28px;">
+        Track what you read, and December turns into a story about your year.
+        Free on the App Store — no account, no ads.
+      </p>
+      <div class="actions">
+        <a class="badge-appstore" href="https://apps.apple.com/app/id6761546582?ct=web_wrapped_cta&amp;mt=8">
+          <img src="assets/appstore-badge.svg" width="168" height="56" alt="Download BooksLove on the App Store">
+        </a>
+        <a class="btn btn--ghost" href="./">See what else it does</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__cols">
+      <div>
+        <h4>Product</h4>
+        <ul>
+          <li><a href="./">Home</a></li>
+          <li><a href="changelog.html">What's new</a></li>
+          <li><a href="https://apps.apple.com/app/id6761546582?ct=web_wrapped_footer&amp;mt=8">App Store</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Guides</h4>
+        <ul>
+          <li><a href="goodreads-alternative.html">Goodreads alternative</a></li>
+          <li><a href="import-from-goodreads.html">Import from Goodreads</a></li>
+          <li><a href="reading-tracker.html">Reading tracker guide</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms of Use</a></li>
+          <li><a href="legal.html">All documents</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="support.html">Support</a></li>
+          <li><a href="press.html">Press kit</a></li>
+          <li><a href="mailto:volynetsvitalii82@gmail.com">Email us</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot__bottom">
+      <span>© <span data-year>2026</span> BooksLove. Made with care for readers.</span>
+      <span>Not affiliated with Goodreads, StoryGraph or Amazon.</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<!--
+  import-from-goodreads.html — SEO-страница инструкционного намерения. T-230.
+
+  ── КАКОЙ ЗАПРОС ОНА ЛОВИТ ──────────────────────────────────────────────────
+  «import goodreads library», «goodreads csv export», «move books from
+  goodreads». Здесь человек не выбирает приложение — он уже решил и ищет, КАК.
+  Поэтому страница начинается не с рекламы, а с первого шага.
+
+  ── ПОЧЕМУ ЭТО ОТДЕЛЬНАЯ СТРАНИЦА, А НЕ РАЗДЕЛ ЛЕНДИНГА ────────────────────
+  У запросов «goodreads alternative» и «how to import from goodreads» разное
+  намерение: первый выбирает, второй уже действует. Одна страница на оба
+  ранжируется хуже по обоим — поисковик не понимает, что она вообще решает.
+  Две страницы с явной перелинковкой закрывают обе воронки, и это не
+  каннибализация, а разделение намерений.
+
+  ── ТОЧНОСТЬ НАЗВАНИЙ ───────────────────────────────────────────────────────
+  Каждая кнопка названа ровно так, как она подписана в приложении. Строки
+  сверены по исходникам: DataSection.swift («Import your library»),
+  ImportView.swift («Choose CSV File»), ImportSourcePickerView.swift
+  («Where is this file from?»), ImportPreviewStepView.swift («Where they’ll go»,
+  «What this file can’t bring»), ImportSummaryStepView.swift («Let’s finish the
+  job», «Fix my library»). Инструкция, где кнопка называется иначе, чем на
+  экране, хуже отсутствия инструкции: человек решает, что у него другая версия.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>How to import your Goodreads library into BooksLove</title>
+  <meta name="description" content="Export a CSV from Goodreads and bring your shelves, ratings, dates and reviews into BooksLove in six steps. Re-import any time without creating duplicates.">
+  <link rel="canonical" href="https://volynetsvitalii.github.io/booklove-legal/import-from-goodreads.html">
+
+  <meta name="apple-itunes-app" content="app-id=6761546582">
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="BooksLove">
+  <meta property="og:title" content="How to import your Goodreads library into BooksLove">
+  <meta property="og:description" content="Shelves, ratings, dates and reviews, in six steps. Nothing goes missing quietly.">
+  <meta property="og:url" content="https://volynetsvitalii.github.io/booklove-legal/import-from-goodreads.html">
+  <meta property="og:image" content="https://volynetsvitalii.github.io/booklove-legal/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="How to import your Goodreads library into BooksLove">
+  <meta name="twitter:description" content="Shelves, ratings, dates and reviews, in six steps.">
+  <meta name="twitter:image" content="https://volynetsvitalii.github.io/booklove-legal/assets/og.png">
+
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0b1120" media="(prefers-color-scheme: dark)">
+
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icon.png">
+  <link rel="stylesheet" href="assets/landing.css">
+  <script defer src="assets/landing.js"></script>
+
+  <!--
+    JSON-LD типа HowTo. Google понимает из него, что страница — пошаговая
+    инструкция, и может показать шаги прямо в выдаче. Названия шагов ДОЛЖНЫ
+    совпадать с заголовками на странице: расхождение Google трактует как
+    попытку подсунуть разметку, не соответствующую содержимому.
+  -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to import your Goodreads library into BooksLove",
+    "description": "Export your Goodreads library as a CSV file and bring your shelves, ratings, dates and reviews into BooksLove.",
+    "totalTime": "PT10M",
+    "step": [
+      { "@type": "HowToStep", "name": "Ask Goodreads for your export", "text": "On the Goodreads website open My Books, then Import and export, then press Export Library." },
+      { "@type": "HowToStep", "name": "Download the CSV file", "text": "Goodreads prepares the file and emails you a link. Save it to Files on your iPhone or iPad." },
+      { "@type": "HowToStep", "name": "Open the importer in BooksLove", "text": "Open Settings in BooksLove and tap Import your library." },
+      { "@type": "HowToStep", "name": "Pick the file and tell the app where it came from", "text": "Tap Choose CSV File, select the export, then choose Goodreads on the Where is this file from? screen." },
+      { "@type": "HowToStep", "name": "Check the preview and start the import", "text": "Review how many books were found and where they will go, then tap Import." },
+      { "@type": "HowToStep", "name": "Read the summary and fix what needs attention", "text": "The summary shows what arrived and what needs a manual match. Tap Fix my library to finish the job." }
+    ]
+  }
+  </script>
+</head>
+
+<body>
+
+<nav class="nav">
+  <div class="wrap nav__inner">
+    <a class="nav__brand" href="./"><img src="assets/icon.png" width="30" height="30" alt="">BooksLove</a>
+    <div class="nav__links">
+      <a href="./">Home</a>
+      <a href="goodreads-alternative.html">Why switch</a>
+      <a href="reading-tracker.html">Reading tracker</a>
+    </div>
+    <div class="nav__cta">
+      <a class="btn" href="https://apps.apple.com/app/id6761546582?ct=web_import_nav&amp;mt=8">Get the app</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+<section class="section">
+  <div class="wrap">
+    <div class="article">
+      <p class="eyebrow">Guide · about 10 minutes</p>
+      <h1>Move your Goodreads library into BooksLove</h1>
+      <p class="lede" style="max-width: none;">
+        Your shelves, star ratings, date added, date read and written reviews
+        all come across. Goodreads does not put cover images or start dates in
+        its export, so the app fills covers in from the catalogue and shows you
+        exactly which books still need a date.
+      </p>
+
+      <div class="note">
+        <p>
+          <strong>Do this on a computer first.</strong> The export lives on the
+          Goodreads website, not in the Goodreads app. Once you have the file,
+          the rest happens on your iPhone or iPad.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Шесть шагов ──────────────────────────────────────────────────────── -->
+<section class="section section--alt">
+  <div class="wrap">
+    <div class="article reveal">
+      <h2>Six steps</h2>
+
+      <ol class="steps">
+        <li>
+          <h3>Ask Goodreads for your export</h3>
+          <p>
+            Sign in on <em>goodreads.com</em>, open <strong>My Books</strong>,
+            and in the left column choose <strong>Import and export</strong>.
+            Press <strong>Export Library</strong>. The page tells you the file
+            is being generated.
+          </p>
+        </li>
+
+        <li>
+          <h3>Download the CSV file</h3>
+          <p>
+            A few minutes later Goodreads emails you a link, and the same page
+            shows a dated download link at the top. Save the file — it is called
+            something like <em>goodreads_library_export.csv</em>. On an iPhone,
+            save it into <strong>Files</strong> so the app can reach it; iCloud
+            Drive works well here.
+          </p>
+        </li>
+
+        <li>
+          <h3>Open the importer in BooksLove</h3>
+          <p>
+            In BooksLove, open <strong>Settings</strong> and tap
+            <strong>Import your library</strong>.
+          </p>
+        </li>
+
+        <li>
+          <h3>Pick the file, then say where it came from</h3>
+          <p>
+            Tap <strong>Choose CSV File</strong> and select the export. The app
+            then asks <strong>“Where is this file from?”</strong> — choose
+            <strong>Goodreads</strong>. This is not a formality: each service
+            names its columns differently, and picking the right one is what
+            lets the app read your shelves, ratings and reading dates instead
+            of skipping them.
+          </p>
+        </li>
+
+        <li>
+          <h3>Check the preview, then start</h3>
+          <p>
+            Before anything is written, you see how many books were found,
+            <strong>“Where they’ll go”</strong> — the count landing on each
+            shelf — and <strong>“What this file can’t bring”</strong>, which
+            lists honestly what Goodreads left out of the export. If the numbers
+            look wrong, <strong>“Choose a different app”</strong> or
+            <strong>“Choose a different file”</strong> takes you back. When it
+            looks right, tap <strong>Import</strong>.
+          </p>
+        </li>
+
+        <li>
+          <h3>Read the summary and finish the job</h3>
+          <p>
+            The summary tells you how many books were added and which ones need
+            attention — usually a handful the catalogue could not match by ISBN.
+            <strong>“Fix my library”</strong> walks through them one at a time:
+            missing covers, missing finish dates, books that need a manual
+            match. Nothing disappears quietly, and nothing is left half-done
+            without telling you.
+          </p>
+        </li>
+      </ol>
+    </div>
+
+    <div class="feature__media reveal" style="margin-top: 8px;">
+      <div class="phone">
+        <div class="phone__screen">
+          <img src="assets/screens/import.jpg" width="640" height="1391" loading="lazy"
+               alt="The BooksLove import screen with the Choose CSV File button">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Что переносится ──────────────────────────────────────────────────── -->
+<section class="section">
+  <div class="wrap">
+    <div class="article reveal">
+      <h2>What comes across, and what does not</h2>
+    </div>
+
+    <div class="table-scroll article reveal" style="margin-top: 20px;">
+      <table class="compare">
+        <thead>
+          <tr>
+            <th scope="col">From your Goodreads export</th>
+            <th scope="col">Arrives in BooksLove</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Title, author, ISBN, publisher, page count</th><td class="yes">Yes</td></tr>
+          <tr><th scope="row">Shelves (read, currently-reading, to-read)</th><td class="yes">Yes, mapped onto the four shelves</td></tr>
+          <tr><th scope="row">Your star rating</th><td class="yes">Yes</td></tr>
+          <tr><th scope="row">Date added and date read</th><td class="yes">Yes, when Goodreads recorded them</td></tr>
+          <tr><th scope="row">Your written review and private notes</th><td class="yes">Yes</td></tr>
+          <tr><th scope="row">Cover images</th><td class="no">Not in the export — fetched from the catalogue instead</td></tr>
+          <tr><th scope="row">Start dates</th><td class="no">Goodreads does not export them</td></tr>
+          <tr><th scope="row">Friends, likes, comments, groups</th><td class="no">Not imported — there is nowhere for them to go</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="article reveal" style="margin-top: 40px;">
+      <div class="note">
+        <p>
+          <strong>Dates are never invented.</strong> If Goodreads did not record
+          when you finished a book, the app leaves the date empty rather than
+          filling in today. A made-up finish date would quietly corrupt your
+          yearly goal and every statistic built on it, and you would never know
+          why the numbers looked odd.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Повторный импорт ─────────────────────────────────────────────────── -->
+<section class="section section--alt">
+  <div class="wrap">
+    <div class="article reveal">
+      <h2>Importing again later</h2>
+      <p>
+        You can import the same file, or a newer export, as many times as you
+        like. Books are matched by ISBN and by title and author, so a second
+        import updates what changed instead of creating a second copy of your
+        library. <strong>Import History</strong> in Settings keeps a record of
+        every import: when it ran, which file it was, and how many books it
+        touched.
+      </p>
+
+      <h2>Other services</h2>
+      <p>
+        The same importer reads exports from
+        <strong>The StoryGraph</strong>, <strong>LibraryThing</strong>,
+        <strong>Bookmory</strong>, <strong>Tome</strong>,
+        <strong>Fable</strong> and <strong>Hardcover</strong>. If your file
+        comes from somewhere else entirely, choose <strong>Another app</strong>
+        and the importer works out the columns it recognises and tells you which
+        ones it skipped.
+      </p>
+
+      <h2>Getting your data back out</h2>
+      <p>
+        The same door works in both directions. Settings → Export writes a
+        Goodreads-compatible CSV or a complete JSON file containing everything,
+        including things a CSV cannot hold. It is free, it needs no
+        subscription, and it works on any day you feel like using it.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="cta reveal">
+      <h2>Ready when you are</h2>
+      <p class="lede" style="margin: 0 auto 28px;">
+        Free on the App Store. Bring the CSV, keep the history.
+      </p>
+      <div class="actions">
+        <a class="badge-appstore" href="https://apps.apple.com/app/id6761546582?ct=web_import_cta&amp;mt=8">
+          <img src="assets/appstore-badge.svg" width="168" height="56" alt="Download BooksLove on the App Store">
+        </a>
+        <a class="btn btn--ghost" href="goodreads-alternative.html">Why people switch</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__cols">
+      <div>
+        <h4>Product</h4>
+        <ul>
+          <li><a href="./">Home</a></li>
+          <li><a href="changelog.html">What's new</a></li>
+          <li><a href="https://apps.apple.com/app/id6761546582?ct=web_import_footer&amp;mt=8">App Store</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Guides</h4>
+        <ul>
+          <li><a href="goodreads-alternative.html">Goodreads alternative</a></li>
+          <li><a href="reading-tracker.html">Reading tracker guide</a></li>
+          <li><a href="wrapped.html">Monthly Wrapped</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms of Use</a></li>
+          <li><a href="legal.html">All documents</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="support.html">Support</a></li>
+          <li><a href="press.html">Press kit</a></li>
+          <li><a href="mailto:volynetsvitalii82@gmail.com">Email us</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot__bottom">
+      <span>© <span data-year>2026</span> BooksLove. Made with care for readers.</span>
+      <span>Not affiliated with Goodreads, StoryGraph or Amazon.</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<!--
+  changelog.html — журнал версий. T-230, пункт 5 ТЗ («блог / changelog»).
+
+  ── ЗАЧЕМ ЖУРНАЛ ВООБЩЕ НУЖЕН ───────────────────────────────────────────────
+  Две причины, обе практические.
+
+  1. ДОВЕРИЕ. Заброшенное приложение и живое приложение выглядят в App Store
+     одинаково. Датированный список версий — единственное дешёвое доказательство
+     того, что работа идёт. Для приложения, которое просит доверить ему всю
+     историю чтения, это не мелочь.
+
+  2. ОРГАНИКА. Страница обновляется чаще всех остальных, и поисковые роботы
+     заходят на неё регулярно, а через неё — на весь сайт.
+
+  ── ПРАВИЛО ЗАПОЛНЕНИЯ ──────────────────────────────────────────────────────
+  Сюда попадает только ВЫШЕДШЕЕ. Раздел «в работе» помечен явно и не содержит
+  дат: обещанная и сорванная дата вредит доверию сильнее, чем её отсутствие.
+  Тексты выпущенных версий берутся из fastlane/metadata/en-US/release_notes.txt
+  того релиза — расхождение между магазином и сайтом здесь заметнее всего.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>What's new in BooksLove — release notes</title>
+  <meta name="description" content="Every BooksLove release and what changed in it, newest first — plus what is being worked on now.">
+  <link rel="canonical" href="https://volynetsvitalii.github.io/booklove-legal/changelog.html">
+
+  <meta name="apple-itunes-app" content="app-id=6761546582">
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="BooksLove">
+  <meta property="og:title" content="What's new in BooksLove">
+  <meta property="og:description" content="Every release and what changed in it, newest first.">
+  <meta property="og:url" content="https://volynetsvitalii.github.io/booklove-legal/changelog.html">
+  <meta property="og:image" content="https://volynetsvitalii.github.io/booklove-legal/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="What's new in BooksLove">
+  <meta name="twitter:description" content="Every release and what changed in it, newest first.">
+  <meta name="twitter:image" content="https://volynetsvitalii.github.io/booklove-legal/assets/og.png">
+
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0b1120" media="(prefers-color-scheme: dark)">
+
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icon.png">
+  <link rel="stylesheet" href="assets/landing.css">
+  <script defer src="assets/landing.js"></script>
+</head>
+
+<body>
+
+<nav class="nav">
+  <div class="wrap nav__inner">
+    <a class="nav__brand" href="./"><img src="assets/icon.png" width="30" height="30" alt="">BooksLove</a>
+    <div class="nav__links">
+      <a href="./">Home</a>
+      <a href="reading-tracker.html">Reading tracker</a>
+      <a href="support.html">Support</a>
+    </div>
+    <div class="nav__cta">
+      <a class="btn" href="https://apps.apple.com/app/id6761546582?ct=web_changelog_nav&amp;mt=8">Get the app</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+<section class="section">
+  <div class="wrap">
+    <div class="article">
+      <p class="eyebrow">Changelog</p>
+      <h1>What's new</h1>
+      <p class="lede" style="max-width: none;">
+        Every released version and what changed in it, newest first. Anything
+        still being built is listed separately at the bottom, without a date —
+        a promised date that slips is worse than no date at all.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="section section--alt">
+  <div class="wrap">
+    <div class="article reveal">
+
+      <h2>Version 1.0.1</h2>
+      <p class="muted">Released 2026</p>
+      <ul class="ticks">
+        <li>Clearer explanation of why the camera is needed, shown before the system asks for permission</li>
+        <li>Corrected privacy details and licence links in the App Store listing</li>
+        <li>Fixed the support address so it opens a page that actually exists</li>
+      </ul>
+
+      <h2>Version 1.0</h2>
+      <p class="muted">The first public release</p>
+      <ul class="ticks">
+        <li>Add books in seconds by scanning a barcode or searching millions of titles</li>
+        <li>Four smart shelves and a cover-first library, in a grid or a list</li>
+        <li>Half-star ratings and private notes on every book</li>
+        <li>A yearly reading goal, a reading streak and Home Screen widgets</li>
+        <li>Statistics, a Yearly Chronicle and shareable Monthly Wrapped cards</li>
+        <li>Goodreads CSV import, and export to CSV or JSON at any time</li>
+        <li>iCloud sync across iPhone and iPad, and full offline use</li>
+        <li>Dark Mode, Dynamic Type and VoiceOver support throughout</li>
+      </ul>
+
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="article reveal">
+      <h2>Being worked on</h2>
+      <p>
+        Not released yet, and deliberately without a date. This is what the next
+        version is about rather than a complete list.
+      </p>
+      <ul class="ticks">
+        <li>Importing from six more services beside Goodreads, with a preview before anything is written</li>
+        <li>A reconciliation screen that shows exactly what an import brought across and what still needs attention</li>
+        <li>A reading timer that logs sessions, and a daily page target beside the yearly goal</li>
+        <li>Series tracking with reading order and gaps, and a radar for upcoming volumes</li>
+        <li>Saved quotes, including capturing a page with the camera</li>
+        <li>Per-book visibility, so a single book can be kept off every shareable card</li>
+      </ul>
+
+      <div class="note">
+        <p>
+          Found something broken, or want something that isn't here?
+          <a href="support.html">Support</a> has the address, and every message
+          is read by the person who wrote the app.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__cols">
+      <div>
+        <h4>Product</h4>
+        <ul>
+          <li><a href="./">Home</a></li>
+          <li><a href="changelog.html">What's new</a></li>
+          <li><a href="https://apps.apple.com/app/id6761546582?ct=web_changelog_footer&amp;mt=8">App Store</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Guides</h4>
+        <ul>
+          <li><a href="goodreads-alternative.html">Goodreads alternative</a></li>
+          <li><a href="import-from-goodreads.html">Import from Goodreads</a></li>
+          <li><a href="reading-tracker.html">Reading tracker guide</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms of Use</a></li>
+          <li><a href="legal.html">All documents</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="support.html">Support</a></li>
+          <li><a href="press.html">Press kit</a></li>
+          <li><a href="mailto:volynetsvitalii82@gmail.com">Email us</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot__bottom">
+      <span>© <span data-year>2026</span> BooksLove. Made with care for readers.</span>
+      <span>Not affiliated with Goodreads, StoryGraph or Amazon.</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

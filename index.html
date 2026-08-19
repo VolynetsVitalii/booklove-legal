@@ -1,63 +1,814 @@
 <!DOCTYPE html>
+<!--
+  index.html — лендинг BooksLove. T-230 (Блок 1A v1.1), редакция 2.
+
+  ── ЧТО ИЗМЕНИЛОСЬ В РЕДАКЦИИ 2 ─────────────────────────────────────────────
+  1. Рамка телефона перестала обрезать скриншот: aspect-ratio переехал с рамки
+     на экран. Раньше срезало по 5,4 px с каждой стороны (3,9 % ширины), и
+     интерфейс приложения выглядел вжатым в края корпуса.
+  2. Шесть одинаковых блоков «текст + картинка» заменены ЛИПКОЙ СЦЕНОЙ: телефон
+     стоит на месте, текст идёт мимо, кадр меняется. Одинаковые блоки читаются
+     как шаблон и пролистываются не глядя.
+  3. Добавлена сетка функций из двенадцати карточек. В первой редакции лендинг
+     показывал примерно половину приложения: цитат, вкусовых тегов, лотереи
+     TBR, своих вкладок, радара серий, «Fix my library», источника рекомендации,
+     карточек дня, журнала сессий и Library Health не было вовсе.
+  4. Полоса цифр, индикатор прокрутки, зерно поверх страницы.
+
+  ── ⚠️ КОГДА ЭТУ СТРАНИЦУ МОЖНО ПУБЛИКОВАТЬ ─────────────────────────────────
+  Страница описывает функции версии 1.1, а в App Store сейчас 1.0.1. Сайт
+  обязан уехать ОДНОВРЕМЕННО с релизом v1.1 (T-401), не раньше: иначе он
+  обещает то, чего в скачанном приложении ещё нет. Сторож следит за этим с
+  другой стороны — проверка H требует, чтобы changelog.html содержал текущий
+  MARKETING_VERSION проекта.
+
+  ── ПОРЯДОК БЛОКОВ ──────────────────────────────────────────────────────────
+  Подчинён порядку, в каком человек задаёт вопросы:
+    1. «Что это?»            → hero.
+    2. «Насколько всерьёз?»  → полоса из четырёх проверяемых цифр.
+    3. «Как это работает?»   → липкая сцена из пяти глав.
+    4. «А ещё что умеет?»    → сетка из двенадцати карточек.
+    5. «У меня всё в Goodreads» → блок переезда.
+    6. «А данные?»           → манифест приватности с ИМЕНАМИ получателей.
+    7. «А если…?»            → FAQ.
+    8. «Ладно.»              → финальный призыв.
+
+  ── ПРАВИЛО ТЕКСТА ──────────────────────────────────────────────────────────
+  Ни одного обещания функции, которой нет в коде. Названия экранов и кнопок
+  сверены по исходникам. Формулировки про приватность скопированы из
+  BookLove/Domain/Models/TrustPolicy.swift дословно.
+-->
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>BooksLove — Legal</title>
-  <link rel="stylesheet" href="assets/style.css">
+
+  <title>BooksLove — a private book tracker for iPhone and iPad</title>
+  <meta name="description" content="Track every book you read — without ads, without an account, without a server of ours. Quotes, series, spice tags, goals and Goodreads import. For iPhone and iPad.">
+  <link rel="canonical" href="https://volynetsvitalii.github.io/booklove-legal/">
+
+  <meta name="apple-itunes-app" content="app-id=6761546582, app-argument=https://volynetsvitalii.github.io/booklove-legal/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BooksLove">
+  <meta property="og:title" content="BooksLove — a private book tracker for iPhone and iPad">
+  <meta property="og:description" content="No ads. No account. No server of ours. Your shelves live on your device and sync through your own iCloud.">
+  <meta property="og:url" content="https://volynetsvitalii.github.io/booklove-legal/">
+  <meta property="og:image" content="https://volynetsvitalii.github.io/booklove-legal/assets/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="BooksLove — track your reading, keep it private">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="BooksLove — a private book tracker">
+  <meta name="twitter:description" content="No ads. No account. Your shelves stay yours.">
+  <meta name="twitter:image" content="https://volynetsvitalii.github.io/booklove-legal/assets/og.png">
+
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0b1120" media="(prefers-color-scheme: dark)">
+
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icon.png">
+  <link rel="stylesheet" href="assets/landing.css">
+  <link rel="preload" as="image" href="assets/screens/library.jpg">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "BooksLove",
+    "applicationCategory": "LifestyleApplication",
+    "operatingSystem": "iOS 17.6 or later",
+    "url": "https://volynetsvitalii.github.io/booklove-legal/",
+    "downloadUrl": "https://apps.apple.com/app/id6761546582",
+    "image": "https://volynetsvitalii.github.io/booklove-legal/assets/og.png",
+    "description": "A book tracker for iPhone and iPad with no ads, no account and no server of its own. Shelves, half-star ratings, quotes, series tracking, reading goals, statistics and Goodreads import.",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+
+  <script defer src="assets/landing.js"></script>
 </head>
+
 <body>
 
-  <header class="site">
-    <span class="mark" aria-hidden="true">📖</span>
-    <span class="name">BooksLove</span>
-  </header>
+<a class="sr-only" href="#main">Skip to content</a>
 
-  <main>
-    <h1>BooksLove — Legal</h1>
-    <p class="updated">Beautiful, private book tracking for iPhone &amp; iPad.</p>
+<!-- Индикатор прокрутки. Ширину задаёт landing.js. -->
+<div class="progress" aria-hidden="true"></div>
 
-    <p class="summary">
-      BooksLove keeps your reading library on your device and in your own private
-      iCloud. No accounts, no ads, no tracking. These pages explain exactly how
-      the app treats your data and the rules for using it.
+<nav class="nav">
+  <div class="wrap nav__inner">
+    <a class="nav__brand" href="./">
+      <img src="assets/icon.png" width="30" height="30" alt="">
+      BooksLove
+    </a>
+    <div class="nav__links">
+      <a href="#tour">Tour</a>
+      <a href="#everything">Everything</a>
+      <a href="#privacy">Privacy</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <div class="nav__cta">
+      <!-- ct= — campaign token Apple: App Store Connect → Analytics →
+           Acquisition → Campaigns покажет, какая кнопка приносит установки. -->
+      <a class="btn" href="https://apps.apple.com/app/id6761546582?ct=web_nav&amp;mt=8">Get the app</a>
+    </div>
+  </div>
+</nav>
+
+<main id="main">
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     HERO
+     ═══════════════════════════════════════════════════════════════════════ -->
+<header class="hero">
+  <div class="wrap">
+    <div class="hero__grid">
+
+      <div>
+        <p class="eyebrow">For iPhone and iPad</p>
+
+        <h1 class="hero__title">
+          Every book you read.<br>
+          <span class="hero__accent">Yours alone.</span>
+        </h1>
+
+        <p class="lede hero__lede">
+          A book tracker with no ads, no account and no server of ours. Scan a
+          cover, keep the quotes, follow the series, hit the goal — and your
+          library never leaves your own iCloud.
+        </p>
+
+        <div class="actions hero__actions">
+          <a class="badge-appstore" href="https://apps.apple.com/app/id6761546582?ct=web_hero&amp;mt=8">
+            <img src="assets/appstore-badge.svg" width="168" height="56" alt="Download BooksLove on the App Store">
+          </a>
+          <a class="btn btn--ghost" href="import-from-goodreads.html">Coming from Goodreads?</a>
+        </div>
+
+        <p class="hero__note">
+          Free to download · iOS 17.6 or later · Nothing to sign up for
+        </p>
+
+        <ul class="pills" style="margin-top: 26px;">
+          <li class="pill">No account</li>
+          <li class="pill">No ads</li>
+          <li class="pill">Private by default</li>
+          <li class="pill">Works offline</li>
+          <li class="pill">Export any time</li>
+        </ul>
+      </div>
+
+      <div class="hero__media">
+        <div class="phone phone--glow">
+          <div class="phone__screen">
+            <img src="assets/screens/library.jpg" width="640" height="1391"
+                 alt="The BooksLove library: a grid of book covers with shelf counters at the bottom"
+                 fetchpriority="high">
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     ПОЛОСА ЦИФР
+     ───────────────────────────────────────────────────────────────────────
+     Все четыре числа — ПРОВЕРЯЕМЫЕ факты о продукте. Метрик вроде «100 000
+     довольных читателей» здесь нет и не будет: их пришлось бы выдумать.
+     ═══════════════════════════════════════════════════════════════════════ -->
+<section class="section section--alt" style="padding-top: 56px; padding-bottom: 56px;">
+  <div class="wrap">
+    <div class="stats reveal">
+      <div>
+        <span class="stats__n">0</span>
+        <span class="stats__l">accounts to create — the app opens straight into your library</span>
+      </div>
+      <div>
+        <span class="stats__n">0</span>
+        <span class="stats__l">ads, now or later, and no advertising SDK in the app</span>
+      </div>
+      <div>
+        <span class="stats__n">7</span>
+        <span class="stats__l">services you can import a library from, Goodreads included</span>
+      </div>
+      <div>
+        <span class="stats__n">2</span>
+        <span class="stats__l">export formats, free forever: Goodreads-compatible CSV and full JSON</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     ЛИПКАЯ СЦЕНА — ПЯТЬ ГЛАВ
+     ───────────────────────────────────────────────────────────────────────
+     Телефон прилипает к экрану, текст идёт мимо, кадр меняется.
+
+     Связь «глава ↔ кадр» — через атрибут data-shot, а не через порядковый
+     номер: с номерами перестановка двух глав в разметке молча показывала бы
+     чужой экран, и заметить это можно только глазами.
+     ═══════════════════════════════════════════════════════════════════════ -->
+<section class="section" id="tour">
+  <div class="wrap">
+    <div class="lead-block reveal" style="margin-bottom: 24px;">
+      <p class="eyebrow">The tour</p>
+      <h2>One app, your whole reading life</h2>
+      <p class="lede">From the barcode on the back cover to the card you send a
+      friend in December.</p>
+    </div>
+
+    <div class="scene__grid">
+
+      <div class="scene__steps">
+
+        <article class="scene__step" data-shot="library">
+          <p class="eyebrow">Chapter one</p>
+          <h3>A book on your shelf in four seconds</h3>
+          <p class="lede">Point the camera at the barcode. Cover, description,
+          page count and community rating arrive on their own.</p>
+          <ul class="ticks">
+            <li>Scan one book, or scan a whole shelf without stopping between books</li>
+            <li>Scanned the wrong pile? An undo timer takes it all back</li>
+            <li>Search millions of titles by name, author or ISBN</li>
+            <li>Nothing in the catalogue? Add the book by hand, cover photo and all</li>
+          </ul>
+        </article>
+
+        <article class="scene__step" data-shot="bookdetail">
+          <p class="eyebrow">Chapter two</p>
+          <h3>The page you actually come back to</h3>
+          <p class="lede">Half-star ratings, private notes, saved quotes, spice
+          level and the tropes you look for.</p>
+          <ul class="ticks">
+            <li>Rate from 0.5 to 5 — not every book is a clean whole number</li>
+            <li>Save quotes by photographing the page, or bring your Kindle highlights over</li>
+            <li>Tag spice level and tropes: enemies to lovers, found family, slow burn</li>
+            <li>Record who recommended it, so you remember why it is on the pile</li>
+          </ul>
+        </article>
+
+        <article class="scene__step" data-shot="goal">
+          <p class="eyebrow">Chapter three</p>
+          <h3>A goal you can actually keep</h3>
+          <p class="lede">A yearly number, a daily target, a timer that logs the
+          session, and a streak that only asks you to show up.</p>
+          <ul class="ticks">
+            <li>Yearly goal with a progress ring, plus a daily pages target</li>
+            <li>Reading timer with a journal: how long, how far, how it went</li>
+            <li>Home Screen widgets for the goal, the current book and recently added</li>
+            <li>An optional evening reminder — off until you turn it on</li>
+          </ul>
+        </article>
+
+        <article class="scene__step" data-shot="stats">
+          <p class="eyebrow">Chapter four</p>
+          <h3>Statistics that read like a story</h3>
+          <p class="lede">Books finished, pages turned, your best year, your
+          genres — and a card you can actually send to someone.</p>
+          <ul class="ticks">
+            <li>Books by year, breakdown by genre, average rating, longest streak</li>
+            <li>Your Yearly Chronicle — everything you finished, month by month</li>
+            <li>Monthly Wrapped and a daily card, square for the grid or tall for stories</li>
+            <li>Every card is drawn on your device and never uploaded anywhere</li>
+          </ul>
+        </article>
+
+        <article class="scene__step" data-shot="import">
+          <p class="eyebrow">Chapter five</p>
+          <h3>Come with everything. Leave with everything.</h3>
+          <p class="lede">Import from seven services. Export all of it back out
+          whenever you like, free, no questions asked.</p>
+          <ul class="ticks">
+            <li>Goodreads CSV keeps shelves, ratings, dates and reviews</li>
+            <li>Also reads The StoryGraph, LibraryThing, Bookmory, Tome, Fable and Hardcover</li>
+            <li>Re-import later and updates merge instead of duplicating</li>
+            <li>Export to Goodreads-compatible CSV or complete JSON in one tap</li>
+          </ul>
+          <p style="margin-top: 18px;">
+            <a class="btn btn--ghost" href="import-from-goodreads.html">How the Goodreads import works →</a>
+          </p>
+        </article>
+
+      </div>
+
+      <!-- Липкий телефон. Все кадры лежат в экране СРАЗУ, друг на друге, и
+           переключается только прозрачность. Подмена src давала бы вспышку
+           пустого экрана на каждом переходе. -->
+      <div class="scene__stage">
+        <div class="phone">
+          <div class="phone__screen">
+            <img class="scene__shot is-active" data-shot="library"
+                 src="assets/screens/library.jpg" width="640" height="1391"
+                 alt="The library screen: a grid of book covers">
+            <img class="scene__shot" data-shot="bookdetail"
+                 src="assets/screens/bookdetail.jpg" width="640" height="1391"
+                 alt="A book detail screen with cover, rating and description">
+            <img class="scene__shot" data-shot="goal"
+                 src="assets/screens/goal.jpg" width="640" height="1391"
+                 alt="The reading goal screen with a progress ring">
+            <img class="scene__shot" data-shot="stats"
+                 src="assets/screens/stats.jpg" width="640" height="1391"
+                 alt="The statistics screen with charts by year and genre">
+            <img class="scene__shot" data-shot="import"
+                 src="assets/screens/import.jpg" width="640" height="1391"
+                 alt="The import screen reading a Goodreads CSV file">
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     СЕТКА ФУНКЦИЙ — всё остальное, что умеет приложение
+     ───────────────────────────────────────────────────────────────────────
+     Двенадцать карточек. В первой редакции лендинга не было ни одной из
+     первых десяти, и половина приложения оставалась незамеченной.
+     ═══════════════════════════════════════════════════════════════════════ -->
+<section class="section section--alt" id="everything">
+  <div class="wrap">
+    <div class="lead-block reveal">
+      <p class="eyebrow">Everything else</p>
+      <h2>The parts you find in month two</h2>
+      <p class="lede">None of these sit behind a purchase. They are simply in
+      there.</p>
+    </div>
+
+    <div class="fgrid reveal" style="margin-top: 36px;">
+
+      <div class="fcard">
+        <span class="fcard__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M7 7h4v6a3 3 0 0 1-3 3H7zM14 7h4v6a3 3 0 0 1-3 3h-1z"/>
+          </svg>
+        </span>
+        <h3>Quotes, captured by camera</h3>
+        <p>Photograph a page and the text is read straight off it. Or bring your
+        Kindle highlights over in one go, without creating duplicates.</p>
+      </div>
+
+      <div class="fcard">
+        <span class="fcard__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3c2.5 3.5 4 5.8 4 8a4 4 0 0 1-8 0c0-2.2 1.5-4.5 4-8z"/>
+          </svg>
+        </span>
+        <h3>Spice level and tropes</h3>
+        <p>Tag a book the way you actually talk about it: enemies to lovers,
+        found family, slow burn. Personal tags, visible to nobody else.</p>
+      </div>
+
+      <div class="fcard">
+        <span class="fcard__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="3"/>
+            <circle cx="8.5" cy="8.5" r="1.3" fill="currentColor" stroke="none"/>
+            <circle cx="12" cy="12" r="1.3" fill="currentColor" stroke="none"/>
+            <circle cx="15.5" cy="15.5" r="1.3" fill="currentColor" stroke="none"/>
+          </svg>
+        </span>
+        <h3>Can't decide? Pick for me</h3>
+        <p>Filter your to-be-read pile by genre, length or mood, then let the app
+        choose one. Not feeling it? Pick again.</p>
+      </div>
+
+      <div class="fcard">
+        <span class="fcard__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 6h10M4 12h16M4 18h7"/><circle cx="19" cy="6" r="2"/>
+          </svg>
+        </span>
+        <h3>Series, in reading order</h3>
+        <p>See the whole series, which volume is next and which one you skipped.
+        Follow a series and hear about new books in it.</p>
+      </div>
+
+      <div class="fcard">
+        <span class="fcard__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 7h16M4 12h16M4 17h16"/><path d="M8 4.5v5M16 14.5v5"/>
+          </svg>
+        </span>
+        <h3>Tabs you make yourself</h3>
+        <p>Group the library the way your head works — by mood, by shelf in the
+        room, by whatever you like. Colour them, reorder them, drag them.</p>
+      </div>
+
+      <div class="fcard">
+        <span class="fcard__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17v3h3l5.3-5.3a4 4 0 0 0 5.4-5.4l-2.3 2.3-1.7-1.7z"/>
+          </svg>
+        </span>
+        <h3>Fix my library</h3>
+        <p>One screen that finds books missing a cover, missing a read date, or
+        sitting there as two editions of the same thing — and fixes them.</p>
+      </div>
+
+      <div class="fcard">
+        <span class="fcard__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0"/><path d="M16.5 6.5l2 2 4-4"/>
+          </svg>
+        </span>
+        <h3>Who recommended it</h3>
+        <p>Save who told you about a book and why you wanted it. Then filter your
+        pile by the friend whose taste you trust.</p>
+      </div>
+
+      <div class="fcard">
+        <span class="fcard__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>
+          </svg>
+        </span>
+        <h3>Finish it by a date</h3>
+        <p>Say when you want to be done and the app works out the pages per day.
+        Miss a few days and the number quietly adjusts.</p>
+      </div>
+
+      <div class="fcard">
+        <span class="fcard__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 16l5-4 4 3 3-2 6 4"/><circle cx="8.5" cy="8" r="1.4"/>
+          </svg>
+        </span>
+        <h3>A card a day</h3>
+        <p>A different shareable card every day, drawn from your own library —
+        square for the grid, tall for stories. Made on your phone, never uploaded.</p>
+      </div>
+
+      <div class="fcard">
+        <span class="fcard__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 21s-7-4.6-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.4-7 10-7 10z"/><path d="M9 11.5h6"/>
+          </svg>
+        </span>
+        <h3>Library Health</h3>
+        <p>How many books are missing a cover, a page count or a date — a number
+        you can watch go down instead of a vague feeling of mess.</p>
+      </div>
+
+      <div class="fcard">
+        <span class="fcard__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 9h16"/><path d="M9 14h6"/>
+          </svg>
+        </span>
+        <h3>Did Not Finish is a shelf</h3>
+        <p>Abandoning a book is a real outcome, not a failure state. It gets its
+        own shelf, so it stops staring at you from Currently Reading.</p>
+      </div>
+
+      <div class="fcard">
+        <span class="fcard__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3l7 5v8l-7 5-7-5V8z"/><path d="M12 3v18"/>
+          </svg>
+        </span>
+        <h3>iPhone and iPad, in sync</h3>
+        <p>The same library on both, through your own iCloud. Edit on the sofa,
+        pick it up on the train — and it all works offline first.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     ПЕРЕЕЗД С GOODREADS
+     ═══════════════════════════════════════════════════════════════════════ -->
+<section class="section">
+  <div class="wrap">
+    <div class="measure center reveal">
+      <p class="eyebrow">Switching</p>
+      <h2>Your Goodreads library, moved in three steps</h2>
+      <p class="lede" style="margin: 0 auto 36px;">Shelves, ratings, dates and
+      reviews come across. Nothing is left behind quietly — a reconciliation
+      screen shows you every book that needed attention.</p>
+    </div>
+
+    <div class="grid-3">
+      <div class="card reveal">
+        <h3>1. Export from Goodreads</h3>
+        <p>On the Goodreads website, open <em>My Books → Import and export</em>
+        and press <em>Export Library</em>. You get a CSV file by email.</p>
+      </div>
+      <div class="card reveal reveal--d1">
+        <h3>2. Open it in BooksLove</h3>
+        <p>Settings → Import. Pick the CSV. The app reads it, matches each book
+        against the catalogue and fills in covers.</p>
+      </div>
+      <div class="card reveal reveal--d2">
+        <h3>3. Check the summary</h3>
+        <p>You see how many books arrived, how many needed a manual match, and
+        exactly which ones. Nothing disappears silently.</p>
+      </div>
+    </div>
+
+    <p class="center" style="margin-top: 36px;">
+      <a class="btn" href="import-from-goodreads.html">Read the full guide</a>
     </p>
+  </div>
+</section>
 
-    <h2>What we promise</h2>
-    <ul>
-      <li><strong>No account, ever.</strong> No sign-up, no password, and no BooksLove server holding your books.</li>
-      <li><strong>Your data, your iCloud.</strong> Your library lives on your device and syncs through your own private iCloud. We have no way to read it.</li>
-      <li><strong>No ads. Not now, not later.</strong> No banners, no sponsored books, no advertising SDK.</li>
-      <li><strong>Private by default.</strong> Your shelves are private from the first launch, and any single book can be hidden from every shareable card.</li>
-      <li><strong>The door is always open.</strong> Export your whole library to CSV or JSON at any time, free, and delete everything whenever you want.</li>
-    </ul>
+<!-- ═══════════════════════════════════════════════════════════════════════
+     МАНИФЕСТ ПРИВАТНОСТИ
+     ───────────────────────────────────────────────────────────────────────
+     Четыре обещания — дословно из TrustPolicy.promises. Таблица получателей —
+     точная копия TrustPolicy.dataRecipients, включая ОБЕ сторонние
+     библиотеки: умолчание о них было бы тем самым способом соврать, который
+     ловит Scripts/trust-audit.sh с другой стороны.
+     ═══════════════════════════════════════════════════════════════════════ -->
+<section class="section section--alt" id="privacy">
+  <div class="wrap">
+    <div class="promise reveal" style="margin-bottom: 56px;">
+      <div>
+        <h3>No account, ever</h3>
+        <p>There is no sign-up, no password and no BooksLove server holding your books. You open the app and it is already yours.</p>
+      </div>
+      <div>
+        <h3>Your data, your iCloud</h3>
+        <p>Your library lives on your device and syncs through your own private iCloud. We have no way to read it.</p>
+      </div>
+      <div>
+        <h3>No ads. Not now, not later</h3>
+        <p>No banners, no sponsored books, no advertising SDK — nothing between you and your shelves.</p>
+      </div>
+      <div>
+        <h3>Private by default</h3>
+        <p>Your shelves are private from the first launch. Nothing is published anywhere unless you deliberately share it.</p>
+      </div>
+    </div>
 
-    <p>
-      The app names every outside service it talks to — including the two
-      third-party SDKs it uses — in <em>Settings → Privacy → Privacy &amp; your
-      data</em>, and section 8 of the
-      <a href="privacy.html">Privacy Policy</a> describes each one in full.
-      We do not pretend the app contains zero outside libraries. It contains
-      exactly two, and both are named, with what each one receives.
-    </p>
+    <div class="lead-block reveal">
+      <p class="eyebrow">Privacy</p>
+      <h2>We would rather name every recipient than claim there are none</h2>
+      <p class="lede">Plenty of apps say "we respect your privacy" and stop
+      there. Here is the whole list of everything outside your device that
+      receives anything at all, and what each one gets.</p>
+    </div>
 
-    <h2>Documents</h2>
-    <ul>
-      <li><a href="privacy.html">Privacy Policy</a> — what data the app uses, and what it never touches.</li>
-      <li><a href="terms.html">Terms of Use</a> — the rules for using BooksLove.</li>
-      <li><a href="support.html">Support</a> — help with the app and how to reach us.</li>
-    </ul>
+    <div class="table-scroll reveal" style="margin-top: 32px;">
+      <table class="compare">
+        <thead>
+          <tr><th scope="col">Who</th><th scope="col">What they receive</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Apple iCloud</th><td>Your books, shelves, ratings and notes — stored in your private iCloud database, not ours</td></tr>
+          <tr><th scope="row">Google Books</th><td>The words you type, or the ISBN you scan. Never your library</td></tr>
+          <tr><th scope="row">Open Library</th><td>The words you type, or the ISBN you scan. Never your library</td></tr>
+          <tr><th scope="row">RevenueCat</th><td>An anonymous purchase identifier created by the app. No name, no email, no books</td></tr>
+          <tr><th scope="row">TelemetryDeck</th><td>Events like "a book was added" — never a title, an author, a note or a search term. You can switch this off in Settings</td></tr>
+        </tbody>
+      </table>
+    </div>
 
-    <h2>Contact</h2>
-    <p>
-      Questions? Email
-      <a href="mailto:volynetsvitalii82@gmail.com">volynetsvitalii82@gmail.com</a>.
-    </p>
-  </main>
+    <div class="grid-2 reveal" style="margin-top: 40px;">
+      <div>
+        <h3>What the app never does</h3>
+        <ul class="ticks">
+          <li>No advertising, and no advertising SDK in the app</li>
+          <li>No IDFA and no App Tracking Transparency prompt — we cannot track you across apps</li>
+          <li>No selling, renting or sharing of your reading data</li>
+          <li>No account, no password, no profile — nothing to leak</li>
+          <li>No reading of your library: search sends the words you type, never your shelves</li>
+        </ul>
+      </div>
+      <div>
+        <h3>What you can always do</h3>
+        <ul class="ticks">
+          <li>Export everything to CSV or JSON, free, at any moment</li>
+          <li>Hide any single book from every shareable card</li>
+          <li>Turn off anonymous usage statistics in Settings → Privacy</li>
+          <li>Delete every trace from this device and from your iCloud</li>
+        </ul>
+        <p style="margin-top: 18px;">
+          <a href="privacy.html">Read the full Privacy Policy →</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <footer class="site">
-    © 2026 BooksLove. Made with care for readers.
-  </footer>
+<!-- ═══════════════════════════════════════════════════════════════════════
+     ТЁМНАЯ ТЕМА И ДОСТУПНОСТЬ
+     ═══════════════════════════════════════════════════════════════════════ -->
+<section class="section">
+  <div class="wrap">
+    <div class="feature reveal">
+      <div>
+        <p class="eyebrow">Built for everyone</p>
+        <h2>Dark at night, readable at any size</h2>
+        <p class="lede">The app follows your system theme, scales with Dynamic
+        Type all the way up, and was built with VoiceOver from the first screen
+        rather than bolted on afterwards.</p>
+        <ul class="ticks">
+          <li>Full Dark Mode, or force light or dark independently of the system</li>
+          <li>Dynamic Type support across every screen, including the widgets</li>
+          <li>VoiceOver labels, Reduce Motion and high-contrast support</li>
+          <li>Every tap target at least 44 points, as Apple's guidelines require</li>
+        </ul>
+      </div>
+      <div class="feature__media">
+        <div class="phone phone--tilt">
+          <div class="phone__screen">
+            <img src="assets/screens/darkmode.jpg" width="640" height="1391" loading="lazy"
+                 alt="The same library screen in dark mode, with light text on a dark background">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     FAQ
+     ───────────────────────────────────────────────────────────────────────
+     На <details>/<summary>: раскрывается силами браузера, работает с
+     клавиатуры и без JavaScript. landing.js только сворачивает соседей.
+     ═══════════════════════════════════════════════════════════════════════ -->
+<section class="section section--alt" id="faq">
+  <div class="wrap">
+    <div class="measure center reveal">
+      <p class="eyebrow">Questions</p>
+      <h2>The things people ask first</h2>
+    </div>
+
+    <div class="faq reveal" style="margin-top: 40px;">
+
+      <details>
+        <summary>Is it really free?</summary>
+        <div class="faq__a">
+          <p>Downloading and using BooksLove is free. Unlimited books, every
+          statistic, iCloud sync and full export are free forever and are never
+          placed behind a purchase — that is a written guarantee in the app, not
+          a launch promotion. There is an optional subscription for people who
+          want to support the work; it does not unlock the core of the app.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Do I need to create an account?</summary>
+        <div class="faq__a">
+          <p>No. There is no sign-up, no password and no BooksLove server. The
+          app opens straight into your library. Syncing between your iPhone and
+          iPad happens through your own iCloud account, which you already have.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Can I move my library over from Goodreads?</summary>
+        <div class="faq__a">
+          <p>Yes. Export a CSV from Goodreads, open it in BooksLove, and your
+          shelves, ratings, dates and reviews come across. You can re-import the
+          same file later — updates are merged instead of duplicated. The same
+          importer also reads The StoryGraph, LibraryThing, Bookmory, Tome,
+          Fable and Hardcover.
+          <a href="import-from-goodreads.html">Full guide here.</a></p>
+        </div>
+      </details>
+
+      <details>
+        <summary>What happens to my books if I stop using the app?</summary>
+        <div class="faq__a">
+          <p>You take them with you. Export the whole library to a
+          Goodreads-compatible CSV or a complete JSON file in one tap, at any
+          time, without a subscription. The door out is as wide as the door in —
+          that is deliberate.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Does it work without an internet connection?</summary>
+        <div class="faq__a">
+          <p>Yes. Your library is stored on the device, so reading, rating,
+          editing and logging sessions all work offline. Only searching the
+          catalogue and downloading covers need a connection, and changes made
+          offline sync when you are back online.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Are my shelves visible to anybody?</summary>
+        <div class="faq__a">
+          <p>No. There is no public profile, no feed and nowhere to publish to.
+          Sharing only happens when you deliberately create a card and send it
+          yourself, and any single book can be marked so it never appears on one.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Which devices does it run on?</summary>
+        <div class="faq__a">
+          <p>iPhone and iPad running iOS or iPadOS 17.6 and later. The same
+          library appears on both through iCloud, and there are Home Screen
+          widgets for the reading goal, the book you're on and recently added
+          books.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Are there book clubs or a social feed?</summary>
+        <div class="faq__a">
+          <p>Not today. BooksLove is a personal reading tracker. If a social
+          layer is ever built, it will be something you opt into deliberately —
+          the private-by-default behaviour described above is not going to be
+          quietly reversed.</p>
+        </div>
+      </details>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     ФИНАЛЬНЫЙ ПРИЗЫВ + ПОДПИСКА
+     ───────────────────────────────────────────────────────────────────────
+     Подписка — обычная mailto-ссылка, а НЕ форма Mailchimp или Buttondown.
+     Любой такой сервис ставит на страницу чужой скрипт и cookie, то есть
+     ровно то, чего приложение обещает не делать.
+     ═══════════════════════════════════════════════════════════════════════ -->
+<section class="section">
+  <div class="wrap">
+    <div class="cta reveal">
+      <h2>Start your most beautiful reading year yet</h2>
+      <p class="lede" style="margin: 0 auto 28px;">Free on the App Store.
+      No account, no ads, and your books stay yours.</p>
+
+      <div class="actions">
+        <a class="badge-appstore" href="https://apps.apple.com/app/id6761546582?ct=web_footer&amp;mt=8">
+          <img src="assets/appstore-badge.svg" width="168" height="56" alt="Download BooksLove on the App Store">
+        </a>
+      </div>
+
+      <p class="muted" style="margin-top: 32px; font-size: .93rem;">
+        Want a short email when something notable ships?
+        <a href="mailto:volynetsvitalii82@gmail.com?subject=BooksLove%20updates">Ask to be added to the list</a>
+        — no tracking pixels, no third-party mailing service, unsubscribe by replying.
+      </p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__cols">
+
+      <div>
+        <h4>Product</h4>
+        <ul>
+          <li><a href="./">Home</a></li>
+          <li><a href="#tour">Tour</a></li>
+          <li><a href="changelog.html">What's new</a></li>
+          <li><a href="https://apps.apple.com/app/id6761546582?ct=web_footer_link&amp;mt=8">App Store</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Guides</h4>
+        <ul>
+          <li><a href="import-from-goodreads.html">Import from Goodreads</a></li>
+          <li><a href="goodreads-alternative.html">Goodreads alternative</a></li>
+          <li><a href="reading-tracker.html">Reading tracker guide</a></li>
+          <li><a href="wrapped.html">Monthly Wrapped</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms of Use</a></li>
+          <li><a href="legal.html">All documents</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="support.html">Support</a></li>
+          <li><a href="press.html">Press kit</a></li>
+          <li><a href="mailto:volynetsvitalii82@gmail.com">Email us</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="foot__bottom">
+      <!-- data-year подставляет landing.js. Значение в разметке — запасное. -->
+      <span>© <span data-year>2026</span> BooksLove. Made with care for readers.</span>
+      <span>Not affiliated with Goodreads, StoryGraph or Amazon.</span>
+    </div>
+  </div>
+</footer>
 
 </body>
 </html>

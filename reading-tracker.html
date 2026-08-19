@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<!--
+  reading-tracker.html — SEO-страница категории. T-230.
+
+  ── КАКОЙ ЗАПРОС ОНА ЛОВИТ ──────────────────────────────────────────────────
+  «reading tracker», «book tracker app», «reading log», «book journal app»,
+  «tbr list app». Это верх воронки: человек ещё не знает, какое приложение ему
+  нужно, и вводит название категории.
+
+  ── ПОЧЕМУ ЭТО СТРАНИЦА-ХАБ ────────────────────────────────────────────────
+  По запросу категории побеждают не карточки товара, а страницы, отвечающие на
+  сам вопрос («что вообще значит вести учёт чтения»). Поэтому здесь сначала
+  объяснение шести способов вести учёт, и только потом — предложение. Отсюда же
+  идут ссылки на две другие SEO-страницы: хаб собирает вес и раздаёт его.
+
+  ── ЧЕГО ЗДЕСЬ НЕТ ──────────────────────────────────────────────────────────
+  Ни слова про AR-сканер: в приложении сканер ШТРИХКОДОВЫЙ. Техдок предлагал
+  отдельную страницу под запрос «AR book scanner app», но такая страница
+  обещала бы функцию, которой в версии 1.1 не существует (AR — задача T-181,
+  не сделана). Возможности реального сканера описаны ниже своими словами.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Reading tracker for iPhone and iPad — six ways to keep a reading log</title>
+  <meta name="description" content="A reading tracker keeps every book you have read, are reading and mean to read. Six ways to keep a reading log on iPhone — shelves, goals, timer, stats, quotes and series.">
+  <link rel="canonical" href="https://volynetsvitalii.github.io/booklove-legal/reading-tracker.html">
+
+  <meta name="apple-itunes-app" content="app-id=6761546582">
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="BooksLove">
+  <meta property="og:title" content="Reading tracker for iPhone and iPad">
+  <meta property="og:description" content="Six ways to keep a reading log that you will actually keep up with.">
+  <meta property="og:url" content="https://volynetsvitalii.github.io/booklove-legal/reading-tracker.html">
+  <meta property="og:image" content="https://volynetsvitalii.github.io/booklove-legal/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Reading tracker for iPhone and iPad">
+  <meta name="twitter:description" content="Six ways to keep a reading log that you will actually keep up with.">
+  <meta name="twitter:image" content="https://volynetsvitalii.github.io/booklove-legal/assets/og.png">
+
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0b1120" media="(prefers-color-scheme: dark)">
+
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icon.png">
+  <link rel="stylesheet" href="assets/landing.css">
+  <script defer src="assets/landing.js"></script>
+</head>
+
+<body>
+
+<nav class="nav">
+  <div class="wrap nav__inner">
+    <a class="nav__brand" href="./"><img src="assets/icon.png" width="30" height="30" alt="">BooksLove</a>
+    <div class="nav__links">
+      <a href="./">Home</a>
+      <a href="goodreads-alternative.html">Goodreads alternative</a>
+      <a href="import-from-goodreads.html">Import guide</a>
+    </div>
+    <div class="nav__cta">
+      <a class="btn" href="https://apps.apple.com/app/id6761546582?ct=web_tracker_nav&amp;mt=8">Get the app</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+<section class="section">
+  <div class="wrap">
+    <div class="article">
+      <p class="eyebrow">Guide</p>
+      <h1>What a reading tracker is actually for</h1>
+      <p class="lede" style="max-width: none;">
+        A reading tracker is a record of three things: what you have read, what
+        you are reading now, and what you mean to read next. That is the whole
+        idea. Everything else — goals, statistics, timers — exists to make the
+        record worth keeping.
+      </p>
+      <p>
+        Most people abandon a paper reading journal within a couple of months,
+        and the reason is almost always the same: updating it costs more effort
+        than the record gives back. So the useful question is not "which app has
+        the most features", it is "which app makes the record cost almost
+        nothing to keep".
+      </p>
+      <p>
+        Below are six ways of keeping a reading log, roughly from least to most
+        effort, and what each one is actually good for.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ── Шесть способов ───────────────────────────────────────────────────── -->
+<section class="section section--alt">
+  <div class="wrap">
+
+    <div class="feature reveal">
+      <div>
+        <p class="eyebrow">One · the shelf</p>
+        <h2>Four shelves and nothing to decide</h2>
+        <p class="lede">Want to Read, Currently Reading, Read, Did Not Finish.
+        Four is enough to answer every question you actually ask, and few
+        enough that you never spend time organising the organiser.</p>
+        <p>The "Did Not Finish" shelf matters more than it looks. Without it,
+        an abandoned book either sits in "Currently Reading" forever, quietly
+        reproaching you, or gets deleted — and then you buy it again in two
+        years having forgotten why you stopped.</p>
+      </div>
+      <div class="feature__media">
+        <div class="phone phone--tilt">
+          <div class="phone__screen">
+            <img src="assets/screens/library.jpg" width="640" height="1391" loading="lazy"
+                 alt="A library of book covers arranged in a grid">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="feature feature--flip reveal">
+      <div>
+        <p class="eyebrow">Two · the scanner</p>
+        <h2>Adding a book should take four seconds</h2>
+        <p class="lede">Point the camera at the barcode on the back cover. The
+        title, author, cover, page count and description arrive on their own.</p>
+        <p>This is the single thing that decides whether a reading log survives.
+        Typing a title, an author and a page count by hand takes about a minute
+        per book; do that thirty times and the habit dies. Scanning a whole
+        shelf without stopping between books turns an afternoon of data entry
+        into a few minutes.</p>
+      </div>
+      <div class="feature__media">
+        <div class="phone phone--tilt">
+          <div class="phone__screen">
+            <img src="assets/screens/bookdetail.jpg" width="640" height="1391" loading="lazy"
+                 alt="A book detail screen with cover, author and description">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="feature reveal">
+      <div>
+        <p class="eyebrow">Three · the goal</p>
+        <h2>A number you chose, on a screen you already look at</h2>
+        <p class="lede">A yearly reading goal works because it turns an
+        intention into a number, and a Home Screen widget works because it puts
+        the number where you already look forty times a day.</p>
+        <p>Set the goal honestly — a target you miss by half stops meaning
+        anything by March. If a yearly number feels too far away, a daily page
+        target gives the same nudge on a scale you can act on tonight.</p>
+      </div>
+      <div class="feature__media">
+        <div class="phone phone--tilt">
+          <div class="phone__screen">
+            <img src="assets/screens/goal.jpg" width="640" height="1391" loading="lazy"
+                 alt="A yearly reading goal shown as a progress ring">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="feature feature--flip reveal">
+      <div>
+        <p class="eyebrow">Four · the timer and the streak</p>
+        <h2>Minutes read, days in a row</h2>
+        <p class="lede">Start the timer when you open the book, stop it when you
+        put it down. The session is logged with the pages you reached, and the
+        streak counts the days you read at all.</p>
+        <p>A streak is a blunt instrument, and that is the point: it does not
+        care how much you read, only that you did. Ten minutes counts. That is
+        exactly the pressure a habit needs and the pressure a page target
+        cannot apply.</p>
+      </div>
+      <div class="feature__media">
+        <div class="phone phone--tilt">
+          <div class="phone__screen">
+            <img src="assets/screens/goal.jpg" width="640" height="1391" loading="lazy"
+                 alt="Reading progress and streak on the goal screen">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="feature reveal">
+      <div>
+        <p class="eyebrow">Five · the statistics</p>
+        <h2>The part that makes the record worth keeping</h2>
+        <p class="lede">Books finished, pages turned, your best year, your
+        genres, your longest streak — and a Yearly Chronicle listing everything
+        you finished, month by month.</p>
+        <p>Statistics are the payoff for the logging. Nobody keeps a record for
+        the sake of the record; they keep it because in December it turns into
+        a story about the year. Monthly Wrapped cards are that story in a form
+        you can send to a friend.</p>
+      </div>
+      <div class="feature__media">
+        <div class="phone phone--tilt">
+          <div class="phone__screen">
+            <img src="assets/screens/stats.jpg" width="640" height="1391" loading="lazy"
+                 alt="A statistics dashboard with charts by year and genre">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="feature feature--flip reveal">
+      <div>
+        <p class="eyebrow">Six · quotes, series and notes</p>
+        <h2>The things you want to find again</h2>
+        <p class="lede">Save a quote by photographing the page. Track a series
+        so you know which volume is next and which one you skipped. Keep private
+        notes and personal tags on any book.</p>
+        <p>This is the layer that turns a list into a library. A year later the
+        thing you want is rarely "which books did I read" — it is "what was that
+        line about the lighthouse, and which book was it in".</p>
+      </div>
+      <div class="feature__media">
+        <div class="phone phone--tilt">
+          <div class="phone__screen">
+            <img src="assets/screens/darkmode.jpg" width="640" height="1391" loading="lazy"
+                 alt="The library in dark mode">
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── Как выбирать ─────────────────────────────────────────────────────── -->
+<section class="section">
+  <div class="wrap">
+    <div class="article reveal">
+      <h2>Three questions worth asking about any reading tracker</h2>
+
+      <h3>How do books get in?</h3>
+      <p>
+        If adding a book takes a minute of typing, the log will not survive
+        contact with a busy month. Barcode scanning and catalogue search are not
+        conveniences here — they are the difference between a habit and an
+        abandoned app.
+      </p>
+
+      <h3>How do books get out?</h3>
+      <p>
+        Ask before you start, not after three years. Can you export everything,
+        in a format something else can read, without paying? If the answer is
+        no, you are not keeping a record — you are renting one.
+      </p>
+
+      <h3>Who else can see it?</h3>
+      <p>
+        A reading history is a surprisingly personal document: illness, grief,
+        faith, sexuality and everything you were curious about at two in the
+        morning are all visible in it. It is reasonable to want that private by
+        default rather than private by configuration.
+      </p>
+
+      <div class="note">
+        <p>
+          BooksLove answers those three like this: books come in by camera or
+          search, everything goes out to CSV or JSON free at any time, and there
+          is no account and nowhere to publish — your shelves are private from
+          the first launch. <a href="privacy.html">The Privacy Policy names
+          every outside service the app talks to.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--alt">
+  <div class="wrap">
+    <div class="cta reveal">
+      <h2>Start the log tonight</h2>
+      <p class="lede" style="margin: 0 auto 28px;">
+        Free on the App Store. No account, no ads, and your books stay yours.
+      </p>
+      <div class="actions">
+        <a class="badge-appstore" href="https://apps.apple.com/app/id6761546582?ct=web_tracker_cta&amp;mt=8">
+          <img src="assets/appstore-badge.svg" width="168" height="56" alt="Download BooksLove on the App Store">
+        </a>
+        <a class="btn btn--ghost" href="import-from-goodreads.html">Already have a Goodreads library?</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__cols">
+      <div>
+        <h4>Product</h4>
+        <ul>
+          <li><a href="./">Home</a></li>
+          <li><a href="changelog.html">What's new</a></li>
+          <li><a href="https://apps.apple.com/app/id6761546582?ct=web_tracker_footer&amp;mt=8">App Store</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Guides</h4>
+        <ul>
+          <li><a href="goodreads-alternative.html">Goodreads alternative</a></li>
+          <li><a href="import-from-goodreads.html">Import from Goodreads</a></li>
+          <li><a href="wrapped.html">Monthly Wrapped</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms of Use</a></li>
+          <li><a href="legal.html">All documents</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="support.html">Support</a></li>
+          <li><a href="press.html">Press kit</a></li>
+          <li><a href="mailto:volynetsvitalii82@gmail.com">Email us</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot__bottom">
+      <span>© <span data-year>2026</span> BooksLove. Made with care for readers.</span>
+      <span>Not affiliated with Goodreads, StoryGraph or Amazon.</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

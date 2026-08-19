@@ -1,0 +1,1197 @@
+/* landing.css — дизайн-система маркетинговых страниц BooksLove.
+   T-230 (Блок 1A v1.1 — лендинг-сайт и веб-присутствие).
+
+   ─────────────────────────────────────────────────────────────────────────
+   ЧТО ЭТОТ ФАЙЛ ОБСЛУЖИВАЕТ
+   ─────────────────────────────────────────────────────────────────────────
+   index.html · goodreads-alternative.html · import-from-goodreads.html ·
+   reading-tracker.html · wrapped.html · changelog.html · press.html · 404.html
+
+   Юридические документы (privacy / terms / support / legal) продолжают жить
+   на СТАРОМ файле assets/style.css. Это не дубль ради дубля: у документа и у
+   лендинга разные задачи. Документ должен читаться — узкая колонка, крупный
+   межстрочный интервал, ноль украшений. Лендинг должен убеждать — широкая
+   сетка, крупная типографика, картинки во весь экран. Один файл на оба
+   случая пришлось бы всё время переопределять, и каждая правка лендинга
+   рисковала бы сдвинуть Privacy Policy.
+
+   ─────────────────────────────────────────────────────────────────────────
+   ЧЕТЫРЕ ПРИНЦИПА, ИЗ КОТОРЫХ ВЫРОСЛО ВСЁ ОСТАЛЬНОЕ
+   ─────────────────────────────────────────────────────────────────────────
+
+   1. НОЛЬ ВНЕШНИХ ЗАПРОСОВ.
+      Ни Google Fonts, ни CDN, ни аналитики, ни встроенных видео. Причина не
+      в скорости (хотя и в ней тоже), а в T-394: приложение обещает «no
+      advertising SDK / no IDFA / no cross-app tracking», и сайт этого
+      приложения не имеет права ставить человеку чужие cookie ещё до того,
+      как он дочитал обещание. Сторож Scripts/landing-audit.sh (проверка D)
+      падает, если внешний запрос появится.
+
+   2. СИСТЕМНЫЙ ЗАСЕЧНЫЙ ШРИФТ ДЛЯ ЗАГОЛОВКОВ.
+      ui-serif на Apple-устройствах — это New York, шрифт, которым набраны
+      книги в Apple Books. Пара «New York + SF» = ровно тот вид, который у
+      человека уже связан с чтением. И она бесплатна, локальна и не даёт
+      скачка вёрстки при загрузке (FOUT), потому что загружать нечего.
+
+   3. ШКАЛА НА clamp() ВМЕСТО МЕДИА-ЗАПРОСОВ.
+      font-size: clamp(МИН, ПРЕДПОЧТИТЕЛЬНО-В-vw, МАКС) заставляет заголовок
+      плавно расти вместе с окном. Медиа-запросов в файле поэтому всего два,
+      и оба про раскладку (колонки), а не про размеры текста. Меньше правил —
+      меньше мест, где вёрстка разъедется на нестандартной ширине.
+
+   4. ДВИЖЕНИЕ — НЕОБЯЗАТЕЛЬНОЕ УКРАШЕНИЕ.
+      Секции появляются при прокрутке, но страница полностью читаема и без
+      JavaScript, и при prefers-reduced-motion. Приложение уже уважает эту
+      настройку с T-085; сайт не имеет права быть менее аккуратным.        */
+
+
+/* ═════════════════════════════════════════════════════════════════════════
+   1. ТОКЕНЫ — светлая тема
+   ═════════════════════════════════════════════════════════════════════════
+   Все цвета объявлены ОДИН раз здесь. Ниже по файлу цветовых литералов нет
+   вовсе — только var(). Благодаря этому тёмная тема получается заменой
+   одиннадцати значений, а не переписыванием половины файла.
+
+   Значения взяты из дизайн-системы приложения (T-080 AppColor):
+   navy #141b2e — основной текст, синий #2f5bd0 — акцент и ссылки,
+   золото #f6c90e — звёзды рейтинга. Сайт и приложение обязаны читаться как
+   один продукт, иначе переход «сайт → App Store → приложение» ощущается
+   как переход между тремя разными компаниями.                             */
+
+:root {
+  --bg:        #ffffff;                    /* фон страницы */
+  --bg-alt:    #f5f6fa;                    /* фон чередующихся секций */
+  --ink:       #141b2e;                    /* основной текст (бренд navy) */
+  --ink-soft:  #4d5871;                    /* второстепенный текст */
+  --accent:    #2f5bd0;                    /* акцент, ссылки, кнопки */
+  --accent-in: #ffffff;                    /* текст НА акцентной заливке */
+  --gold:      #f6c90e;                    /* звёзды рейтинга (T-050) */
+
+  /* Розовый с иконки приложения — цвет сердца на кремовой обложке. Работает
+     вторым акцентом: в градиенте заголовка и в декоративном свечении. Он же
+     стоит на картинке превью og.png, поэтому ссылка в мессенджере и сама
+     страница читаются как одно целое. */
+  --rose:      #e8607f;
+  --line:      #e4e7f0;                    /* тонкие разделители */
+  --card:      #ffffff;                    /* поверхность карточки */
+
+  /* Тень «мягкая и низкая»: большое размытие, отрицательный spread, низкая
+     прозрачность. Так карточка кажется приподнятой, но не обведённой серой
+     каймой, как это выходит у теней по умолчанию. */
+  --shadow:    0 24px 60px -28px rgba(20, 27, 46, .35);
+
+  /* Два радиуса вместо одного: крупные блоки скругляются сильнее мелких,
+     иначе кнопка внутри карточки выглядит «квадратнее» самой карточки. */
+  --radius:    20px;
+  --radius-sm: 12px;
+
+  --wrap:      1160px;                     /* предельная ширина контента */
+
+  /* Кривая «выехал и мягко замер» (ease-out-quint). Стандартный ease
+     тормозит слишком рано и движение выглядит вялым. */
+  --ease:      cubic-bezier(.22, 1, .36, 1);
+
+  /* Шрифтовые стеки. ui-serif / -apple-system — то, что ОС уже держит в
+     памяти: рендер начинается в первый же кадр. */
+  --font-text:  -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                Helvetica, Arial, sans-serif;
+  --font-title: ui-serif, "New York", Georgia, "Times New Roman", serif;
+}
+
+
+/* ═════════════════════════════════════════════════════════════════════════
+   2. ТОКЕНЫ — тёмная тема
+   ═════════════════════════════════════════════════════════════════════════
+   prefers-color-scheme читает СИСТЕМНУЮ настройку человека. Переключателя
+   на сайте нет сознательно: переключатель — это состояние, которое надо где-
+   то хранить, а хранить его негде без cookie или localStorage. Система уже
+   знает ответ, и приложение (AppThemePreference, T-081) уважает её так же. */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:       #0b1120;                   /* глубокий сине-чёрный */
+    --bg-alt:   #111a2e;
+    --ink:      #eef1f8;
+    --ink-soft: #9aa6c0;
+    --accent:   #7fa4ff;                   /* светлее: на тёмном фоне
+                                              #2f5bd0 не набирает контраст */
+    --accent-in:#0b1120;                   /* текст на светлой кнопке */
+    --rose:     #f4809b;                   /* светлее: на тёмном фоне
+                                              #e8607f теряет насыщенность */
+    --line:     #223052;
+    --card:     #141f38;
+    --shadow:   0 24px 60px -28px rgba(0, 0, 0, .8);
+  }
+}
+
+
+/* ═════════════════════════════════════════════════════════════════════════
+   3. БАЗА
+   ═════════════════════════════════════════════════════════════════════════ */
+
+/* border-box: заданная ширина включает padding и рамку. Без этого блок с
+   `width: 50%` и внутренним отступом занимает БОЛЬШЕ половины, и сетка из
+   двух колонок разваливается на узком экране. */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;          /* iOS не раздувает текст сам */
+  scroll-behavior: smooth;                 /* якорь в навигации прокручивает
+                                              плавно, а не прыгает */
+  /* Якорь не должен уезжать под липкую шапку: браузер оставит 84 px сверху. */
+  scroll-padding-top: 84px;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-text);
+  font-size: 17px;                         /* тот же кегль, что body в iOS */
+  line-height: 1.6;
+  /* Сглаживание: на macOS системный шрифт по умолчанию рендерится жирнее,
+     чем задумано дизайном. Эти две строки возвращают его к норме. */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Горизонтальная прокрутка недопустима: она появляется от одного
+     переполнившего элемента и ломает ощущение качества мгновенно. */
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;                         /* картинка не шире контейнера */
+  height: auto;                            /* пропорции сохраняются */
+  display: block;                          /* убирает 4 px «подстрочника» */
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* Видимая обводка при навигации с клавиатуры. :focus-visible срабатывает
+   ТОЛЬКО для клавиатуры и не мешает тем, кто кликает мышью. */
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Текст «только для скринридера»: невидим глазами, читается VoiceOver.
+   Используется для подписей к иконкам и для ссылки «Skip to content». */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+
+/* ═════════════════════════════════════════════════════════════════════════
+   4. КОНТЕЙНЕР И СЕКЦИИ
+   ═════════════════════════════════════════════════════════════════════════ */
+
+/* Единственный центрирующий контейнер на всём сайте. Боковой отступ 24 px
+   на телефоне — минимум, при котором текст не липнет к скруглению экрана. */
+.wrap {
+  width: 100%;
+  max-width: var(--wrap);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Вертикальный ритм секций. clamp: 56 px на телефоне, до 104 px на десктопе.
+   Первая версия ставила 128 px, и на снимке страницы между секциями зияли
+   полосы пустоты в треть экрана: отступ секции складывается с отступом
+   .feature внутри неё, и суммарный разрыв доходил до 344 px. Воздух должен
+   разделять блоки, а не разрывать страницу на несвязанные листовки. */
+.section { padding: clamp(56px, 7vw, 104px) 0; }
+.section--alt { background: var(--bg-alt); }
+
+
+
+/* ═════════════════════════════════════════════════════════════════════════
+   5. ТИПОГРАФИКА
+   ═════════════════════════════════════════════════════════════════════════
+   Заголовки — засечные, с ОТРИЦАТЕЛЬНЫМ межбуквенным интервалом и плотным
+   межстрочным. У крупного кегля расстояния зрительно растут, и настройки,
+   верные для 17 px, на 64 px выглядят рыхло.                              */
+
+h1, h2, h3 {
+  font-family: var(--font-title);
+  font-weight: 600;
+  letter-spacing: -.02em;
+  line-height: 1.08;
+  margin: 0 0 .4em;
+  /* Запрещает висячее слово в конце заголовка (браузеры Safari/Chrome
+     учитывают его при переносе). */
+  text-wrap: balance;
+}
+
+h1 { font-size: clamp(2.5rem, 6.4vw, 4.6rem); }
+h2 { font-size: clamp(1.9rem, 3.6vw, 3rem); }
+h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); line-height: 1.2; }
+
+p { margin: 0 0 1em; }
+
+/* Ведущий абзац — крупнее основного текста, но НЕ засечный: длинный засечный
+   текст на экране читается тяжелее. Засечки работают на заголовках. */
+.lede {
+  font-size: clamp(1.1rem, 1.5vw, 1.35rem);
+  color: var(--ink-soft);
+  line-height: 1.55;
+  max-width: 46ch;                         /* 46 символов — комфортная строка */
+}
+
+/* Надзаголовок секции: маленькие прописные с широкой разрядкой. Даёт
+   секции «шапку» без ещё одного крупного заголовка. */
+.eyebrow {
+  font-size: .8rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 12px;
+}
+
+.muted { color: var(--ink-soft); }
+.center { text-align: center; }
+
+/* Центрированный блок текста внутри секции: max-width в ch держит длину
+   строки читаемой независимо от ширины окна. */
+.measure { max-width: 62ch; margin-left: auto; margin-right: auto; }
+
+/* Тот же ограничитель длины строки, но БЕЗ центрирования: блок прижат к
+   левому краю секции.
+   Нужен там, где под текстом стоит широкий элемент — таблица или сетка
+   карточек. Центрированный заголовок над левым краем таблицы даёт заметный
+   уступ: два блока начинаются с разных мест, и секция выглядит собранной из
+   двух чужих кусков. Этот дефект был найден на снимке страницы сравнения. */
+.lead-block { max-width: 62ch; }
+
+
+ul.ticks { list-style: none; padding: 0; margin: 0; }
+ul.ticks li {
+  position: relative;
+  padding-left: 30px;
+  margin: 0 0 12px;
+}
+/* Галочка нарисована псевдоэлементом, а не картинкой и не эмодзи: эмодзи
+   рендерится по-разному в каждой ОС и ломает выравнивание. */
+ul.ticks li::before {
+  content: "";
+  position: absolute;
+  left: 4px; top: .55em;
+  width: 12px; height: 7px;
+  border-left: 2.5px solid var(--accent);
+  border-bottom: 2.5px solid var(--accent);
+  transform: rotate(-45deg);
+}
+
+
+/* ═════════════════════════════════════════════════════════════════════════
+   6. НАВИГАЦИЯ
+   ═════════════════════════════════════════════════════════════════════════ */
+
+.nav {
+  position: sticky;                        /* прилипает к верху при прокрутке */
+  top: 0;
+  z-index: 50;
+  /* Полупрозрачный фон + размытие того, что под ним. color-mix даёт
+     прозрачность, не заводя ещё один токен.
+     92 %, а не 82 %: `backdrop-filter` поддержан не везде, и там, где он не
+     сработает, остаётся ТОЛЬКО эта непрозрачность. При 82 % текст страницы
+     читался сквозь шапку — на снимке прокрученной страницы это выглядело
+     поломкой вёрстки, а не приёмом. При 92 % эффект матового стекла остаётся,
+     а запасной вариант выглядит как обычная плотная шапка. */
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  -webkit-backdrop-filter: saturate(180%) blur(16px);
+  backdrop-filter: saturate(180%) blur(16px);
+  border-bottom: 1px solid var(--line);
+}
+
+.nav__inner {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  height: 68px;
+}
+
+.nav__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-title);
+  font-weight: 600;
+  font-size: 1.15rem;
+  color: var(--ink);
+  letter-spacing: -.01em;
+}
+.nav__brand:hover { text-decoration: none; }
+.nav__brand img { width: 30px; height: 30px; border-radius: 7px; }
+
+/* Ссылки середины прячутся на телефоне: втиснуть их в 390 px можно только
+   гамбургер-меню, а гамбургер ради четырёх якорей — лишний JS и лишний
+   способ сломаться. Логотип и кнопка «Get the app» остаются всегда. */
+.nav__links { display: none; gap: 26px; margin-left: auto; }
+.nav__links a { color: var(--ink-soft); font-size: .95rem; font-weight: 500; }
+.nav__links a:hover { color: var(--ink); text-decoration: none; }
+
+.nav__cta { margin-left: auto; }
+
+@media (min-width: 880px) {
+  .nav__links { display: flex; }
+  .nav__cta { margin-left: 0; }
+}
+
+
+/* ═════════════════════════════════════════════════════════════════════════
+   7. КНОПКИ И БЕЙДЖ APP STORE
+   ═════════════════════════════════════════════════════════════════════════ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  /* 12px сверху/снизу + 17px строки ≈ 44 px высоты — минимальная цель
+     касания по HIG. То же правило приложение соблюдает с T-085. */
+  padding: 12px 22px;
+  min-height: 44px;
+  border: 0;
+  border-radius: 999px;                    /* капсула */
+  background: var(--accent);
+  color: var(--accent-in);
+  font: inherit;
+  font-weight: 600;
+  font-size: .98rem;
+  cursor: pointer;
+  transition: transform .25s var(--ease), box-shadow .25s var(--ease);
+}
+.btn:hover {
+  text-decoration: none;
+  transform: translateY(-2px);             /* кнопка «поднимается» под курсор */
+  box-shadow: 0 12px 28px -12px color-mix(in srgb, var(--accent) 70%, transparent);
+}
+.btn:active { transform: translateY(0); }
+
+/* Второстепенная кнопка: обводка вместо заливки. Две одинаково яркие
+   кнопки рядом заставляют выбирать; главная должна быть одна. */
+.btn--ghost {
+  background: transparent;
+  color: var(--ink);
+  border: 1.5px solid var(--line);
+}
+.btn--ghost:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: none;
+}
+
+/* Обёртка встроенного SVG-бейджа «Download on the App Store».
+   Бейдж — ВСТРОЕННЫЙ SVG, а не картинка с серверов Apple: внешний запрос
+   нарушил бы принцип 1 этого файла. Размер 168×56 — пропорции официального
+   бейджа; при замене на официальный файл (см. LegalPages/README.md) размеры
+   совпадут без правки CSS. */
+.badge-appstore {
+  display: inline-block;
+  line-height: 0;                          /* убирает подстрочник у inline-svg */
+  transition: transform .25s var(--ease), opacity .25s var(--ease);
+}
+.badge-appstore:hover { transform: translateY(-2px); opacity: .9; }
+.badge-appstore svg { width: 168px; height: 56px; }
+
+/* Ряд действий: кнопки переносятся на новую строку, а не сжимаются. */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+}
+
+
+/* ═════════════════════════════════════════════════════════════════════════
+   8. ПИЛЮЛИ (короткие обещания)
+   ═════════════════════════════════════════════════════════════════════════ */
+
+.pills { display: flex; flex-wrap: wrap; gap: 8px; padding: 0; margin: 0; list-style: none; }
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--card);
+  font-size: .85rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  white-space: nowrap;                     /* «No ads» не рвётся пополам */
+}
+
+
+/* ═════════════════════════════════════════════════════════════════════════
+   9. HERO
+   ═════════════════════════════════════════════════════════════════════════ */
+
+.hero {
+  position: relative;
+  padding: clamp(56px, 8vw, 104px) 0 clamp(48px, 7vw, 88px);
+  overflow: hidden;                        /* декоративные пятна не вылезают */
+}
+
+/* Два размытых цветных пятна за содержимым. Это чистый CSS-градиент, ноль
+   картинок и ноль килобайт. radial-gradient с прозрачным краем даёт мягкое
+   свечение, которое иначе пришлось бы рисовать PNG на 300 КБ. */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: -30% -10% auto -20%;
+  height: 90%;
+  background:
+    radial-gradient(45% 55% at 22% 32%,
+      color-mix(in srgb, var(--accent) 22%, transparent), transparent 70%),
+    radial-gradient(38% 46% at 82% 12%,
+      color-mix(in srgb, var(--rose) 22%, transparent), transparent 70%);
+  /* Пятна не должны перехватывать клики по тексту под ними. */
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Содержимое поверх пятен. */
+.hero > .wrap { position: relative; z-index: 1; }
+
+.hero__grid {
+  display: grid;
+  gap: clamp(36px, 5vw, 64px);
+  align-items: center;
+}
+
+@media (min-width: 960px) {
+  /* 1.05fr / 0.95fr — текст чуть шире картинки: колонка текста несёт больше
+     смысла, и равные половины визуально отдают картинке слишком много. */
+  .hero__grid { grid-template-columns: 1.05fr .95fr; }
+}
+
+.hero__title { margin-bottom: 20px; }
+
+/* Акцентное слово в заголовке: заливка градиентом по тексту. Приём даёт
+   «дорогой» вид без единой картинки. Запасной цвет объявлен ДО градиента:
+   браузер без background-clip:text покажет его и текст не пропадёт. */
+.hero__accent {
+  color: var(--accent);
+  background: linear-gradient(100deg, var(--accent), var(--rose));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero__lede { margin-bottom: 28px; }
+.hero__actions { margin-bottom: 22px; }
+
+/* Мелкая строка под кнопкой: цена и требования. Снимает главное возражение
+   («сколько это стоит») до того, как человек уйдёт искать ответ. */
+.hero__note { font-size: .88rem; color: var(--ink-soft); margin: 0; }
+
+
+/* ═════════════════════════════════════════════════════════════════════════
+   10. РАМКА ТЕЛЕФОНА
+   ═════════════════════════════════════════════════════════════════════════
+   Рамка нарисована CSS, а не взята картинкой. Причины две: (1) картинка
+   рамки в 3× весит 300–600 КБ на каждую, а рамок на сайте больше десяти;
+   (2) CSS-рамка сама подстраивается под тёмную тему, а PNG со светлым
+   корпусом на тёмном фоне выглядит вырезкой из другого макета.
+
+   ── ГЛАВНОЕ ИСПРАВЛЕНИЕ ЭТОЙ ВЕРСИИ ─────────────────────────────────────
+   Первая версия ставила `aspect-ratio: 1320 / 2868` на САМУ РАМКУ. Рамка
+   включает внутренний отступ, поэтому у экрана внутри получалось совсем
+   другое соотношение: 280 × 631,8 = 0,4432 вместо 0,4603 у скриншота.
+   `object-fit: cover` честно покрывал окно и срезал по 5,4 px с каждой
+   стороны — 3,9 % ширины экрана. Именно поэтому интерфейс приложения
+   выглядел вжатым в края: у него отрезало поля.
+
+   Теперь соотношение задаётся ЭКРАНУ, а высоту рамки определяет её
+   содержимое. Обрезки нет вовсе — ни одного пикселя.
+
+   ── ИЗ ЧЕГО СОБРАН КОРПУС ───────────────────────────────────────────────
+   Три слоя вместо одного, потому что настоящий телефон так и устроен:
+     • padding 12px чёрного цвета — рамка дисплея;
+     • первая тень-кольцо 2,5px — титановый ободок;
+     • вторая тень-кольцо 1px полупрозрачного белого — блик на ободке;
+     • третья тень — мягкая падающая тень под устройством.
+   Раньше корпус был одним градиентом, и разницы между «рамкой дисплея» и
+   «корпусом» не читалось — отсюда и ощущение, что экран приклеен к краю. */
+
+.phone {
+  position: relative;
+
+  /* ── ВСЕ РАЗМЕРЫ КОРПУСА — ДОЛИ ОТ ШИРИНЫ ────────────────────────────────
+     Ширина телефона на сайте разная: 310 px в hero, до 290 px в липкой сцене
+     и всего 150 px на телефоне. Первая версия задавала радиус скругления
+     фиксированными 52 px, и на узком экране это оказалось 35 % ширины —
+     корпус превращался в капсулу, ничем не похожую на телефон.
+
+     Теперь ширина объявлена переменной, а padding, радиусы и Dynamic Island
+     считаются от неё. Доли взяты с настоящего iPhone 17 Pro Max и при любом
+     размере дают одну и ту же форму. */
+  --pw: min(310px, 76vw);
+
+  width: var(--pw);
+  /* aspect-ratio ЗДЕСЬ НЕТ СОЗНАТЕЛЬНО — см. разбор выше. */
+  padding: calc(var(--pw) * .039);
+  border-radius: calc(var(--pw) * .167);
+  background: #05070d;                     /* рамка дисплея */
+  box-shadow:
+    0 0 0 2.5px #39445c,                   /* титановый ободок */
+    0 0 0 3.5px rgba(255, 255, 255, .10),  /* блик на ободке */
+    0 42px 80px -34px rgba(9, 14, 28, .55);
+}
+
+.phone__screen {
+  position: relative;
+  /* Соотношение экрана iPhone 17 Pro Max — РОВНО как у скриншота.
+     Совпадение до знака означает, что object-fit: cover не обрезает ничего,
+     а браузер резервирует место под картинку до её загрузки. */
+  aspect-ratio: 1320 / 2868;
+  border-radius: calc(var(--pw) * .128);   /* радиус корпуса минус рамка */
+  overflow: hidden;
+  background: var(--bg-alt);
+}
+.phone__screen img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Диагональный блик по стеклу. Очень слабый (7 %): задача — намекнуть на
+   стекло, а не засветить скриншот. */
+.phone__screen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(118deg,
+              rgba(255, 255, 255, .07) 0%,
+              rgba(255, 255, 255, 0) 46%);
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* Dynamic Island — чёрная капсула поверх экрана. Симулятор её не рисует,
+   поэтому на скриншоте её нет, и без этой детали кадр выглядит как
+   прямоугольник с картинкой, а не как телефон. */
+.phone::after {
+  content: "";
+  position: absolute;
+  top: calc(var(--pw) * .078); left: 50%;
+  transform: translateX(-50%);
+  width: 30%;
+  height: calc(var(--pw) * .084);
+  border-radius: 999px;
+  background: #05070d;
+  z-index: 4;
+}
+
+/* Наклонённая рамка для секций-фич: лёгкий поворот оживляет статичный
+   скриншот. Наклон снимается при наведении — «взял в руки». */
+.phone--tilt { transform: rotate(-3deg); transition: transform .5s var(--ease); }
+.phone--tilt:hover { transform: rotate(0deg); }
+
+/* Свечение под устройством в hero: цветная подложка, размытая в пятно.
+   Даёт глубину, которой не даёт одна тень. */
+.phone--glow::before {
+  content: "";
+  position: absolute;
+  inset: 12% -18% -10%;
+  background: radial-gradient(50% 50% at 50% 50%,
+              color-mix(in srgb, var(--accent) 42%, transparent),
+              transparent 72%);
+  filter: blur(38px);
+  z-index: -1;
+  pointer-events: none;
+}
+
+
+/* ═════════════════════════════════════════════════════════════════════════
+   11. СЕКЦИЯ-ФИЧА (текст + картинка)
+   ═════════════════════════════════════════════════════════════════════════ */
+
+.feature {
+  display: grid;
+  gap: clamp(32px, 5vw, 72px);
+  align-items: center;
+  /* Отступ МЕЖДУ соседними фичами внутри одной секции. Своих отступов у
+     секции хватает по краям, поэтому здесь величина заметно скромнее. */
+  padding: clamp(36px, 4.5vw, 64px) 0;
+}
+
+/* Крайние фичи в секции не добавляют отступ к отступу самой секции —
+   иначе первая и последняя картинки провисают ниже остальных. */
+.feature:first-child { padding-top: 0; }
+.feature:last-child { padding-bottom: 0; }
+
+@media (min-width: 900px) {
+  .feature { grid-template-columns: 1fr 1fr; }
+
+  /* Чётная секция зеркалится: картинка уходит влево, текст вправо. В
+     разметке порядок ВСЕГДА «текст, картинка» — так скринридер и человек
+     без CSS читают связно. Перестановка чисто визуальная, через order. */
+  .feature--flip .feature__media { order: -1; }
+}
+
+.feature__media { display: flex; justify-content: center; }
+
+
+/* ═════════════════════════════════════════════════════════════════════════
+   12. КАРТОЧКИ И СЕТКИ
+   ═════════════════════════════════════════════════════════════════════════ */
+
+/* auto-fit + minmax: количество колонок вычисляет браузер. Одно правило
+   вместо трёх медиа-запросов, и сетка никогда не даёт «сироту» в ряду. */
+.grid-3 {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+.grid-2 {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 26px;
+  transition: transform .3s var(--ease), box-shadow .3s var(--ease);
+}
+.card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+.card h3 { margin-bottom: 8px; }
+.card p:last-child { margin-bottom: 0; }
+
+
+
+/* ═════════════════════════════════════════════════════════════════════════
+   13. ТАБЛИЦА СРАВНЕНИЯ
+   ═════════════════════════════════════════════════════════════════════════ */
+
+/* Обёртка с горизонтальной прокруткой. Без неё широкая таблица растягивает
+   всю страницу и на телефоне появляется горизонтальный скролл документа —
+   самый заметный признак неаккуратной вёрстки. */
+.table-scroll {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--card);
+  -webkit-overflow-scrolling: touch;
+}
+
+table.compare {
+  width: 100%;
+  min-width: 620px;                        /* ниже включается прокрутка */
+  border-collapse: collapse;
+  font-size: .95rem;
+}
+table.compare th,
+table.compare td {
+  padding: 14px 18px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--line);
+}
+table.compare thead th {
+  font-family: var(--font-text);
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  background: var(--bg-alt);
+}
+table.compare tbody tr:last-child th,
+table.compare tbody tr:last-child td { border-bottom: 0; }
+table.compare tbody th { font-weight: 600; color: var(--ink); }
+
+/* «Да» и «нет» в таблице: цвет + СЛОВО. Один цвет без слова недоступен для
+   людей с дальтонизмом — то же правило приложение соблюдает с T-134. */
+.yes { color: #1f8a52; font-weight: 600; }
+.no  { color: var(--ink-soft); }
+
+@media (prefers-color-scheme: dark) {
+  .yes { color: #4ade80; }
+}
+
+
+/* ═════════════════════════════════════════════════════════════════════════
+   14. FAQ
+   ═════════════════════════════════════════════════════════════════════════
+   Построен на <details>/<summary>. Это РАБОТАЕТ БЕЗ JAVASCRIPT: аккордеон
+   раскрывается силами браузера, доступен с клавиатуры и объявляется
+   скринридером как «раскрывающийся». JS в landing.js только сворачивает
+   соседей — приятная мелочь, без которой ничего не ломается.              */
+
+.faq { max-width: 780px; margin: 0 auto; }
+
+.faq details {
+  border-bottom: 1px solid var(--line);
+  padding: 4px 0;
+}
+
+.faq summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 4px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1.05rem;
+  list-style: none;                        /* убираем стандартный треугольник */
+}
+.faq summary::-webkit-details-marker { display: none; }  /* то же для Safari */
+
+/* Свой «плюс» из двух линий: горизонтальная остаётся, вертикальная
+   поворачивается в горизонталь при раскрытии — получается «минус». */
+.faq summary::after {
+  content: "";
+  flex: 0 0 auto;
+  width: 13px; height: 13px;
+  border-right: 2px solid var(--ink-soft);
+  border-bottom: 2px solid var(--ink-soft);
+  transform: rotate(45deg);                /* стрелка вниз */
+  transition: transform .3s var(--ease);
+}
+.faq details[open] summary::after { transform: rotate(-135deg); }  /* вверх */
+
+.faq__a {
+  padding: 0 4px 22px;
+  color: var(--ink-soft);
+  max-width: 68ch;
+}
+.faq__a p:last-child { margin-bottom: 0; }
+
+
+/* ═════════════════════════════════════════════════════════════════════════
+   15. ПОЛОСА ОБЕЩАНИЙ И ФИНАЛЬНЫЙ ПРИЗЫВ
+   ═════════════════════════════════════════════════════════════════════════ */
+
+.promise {
+  display: grid;
+  gap: 22px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+.promise > div { padding: 4px 0; }
+.promise h3 { font-family: var(--font-text); font-size: 1.02rem; font-weight: 700; margin-bottom: 6px; }
+.promise p { font-size: .95rem; color: var(--ink-soft); margin: 0; }
+
+.cta {
+  text-align: center;
+  border-radius: clamp(24px, 4vw, 40px);
+  padding: clamp(48px, 7vw, 88px) 24px;
+  background:
+    radial-gradient(60% 90% at 50% 0%,
+      color-mix(in srgb, var(--accent) 16%, transparent), transparent 70%),
+    var(--bg-alt);
+  border: 1px solid var(--line);
+}
+.cta .actions { justify-content: center; }
+
+
+/* ═════════════════════════════════════════════════════════════════════════
+   16. ПОДВАЛ
+   ═════════════════════════════════════════════════════════════════════════ */
+
+.foot {
+  border-top: 1px solid var(--line);
+  padding: 56px 0 40px;
+  font-size: .93rem;
+}
+.foot__cols {
+  display: grid;
+  gap: 32px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  margin-bottom: 36px;
+}
+.foot h4 {
+  font-family: var(--font-text);
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin: 0 0 14px;
+}
+.foot ul { list-style: none; padding: 0; margin: 0; }
+.foot li { margin-bottom: 9px; }
+.foot li a { color: var(--ink); }
+.foot__bottom {
+  border-top: 1px solid var(--line);
+  padding-top: 24px;
+  color: var(--ink-soft);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  justify-content: space-between;
+  font-size: .87rem;
+}
+
+
+/* ═════════════════════════════════════════════════════════════════════════
+   17. СТАТЬЯ (SEO-страницы)
+   ═════════════════════════════════════════════════════════════════════════ */
+
+/* ЕДИНСТВЕННАЯ ширина колонки на странице-статье.
+   Ею пользуются и текст, и таблицы, и врезки. Промежуточная ширина «чуть шире
+   для таблицы» уже была написана и удалена: она давала таблице собственный
+   левый край, и при прокрутке страницы содержимое дёргалось влево-вправо от
+   секции к секции. Один край на всю страницу спокойнее любой выгаданной
+   таблице пары сотен пикселей. */
+.article { max-width: 760px; margin: 0 auto; }
+.article h2 { margin-top: 2em; }
+.article h3 { margin-top: 1.6em; }
+.article ol { padding-left: 22px; }
+.article ol li { margin-bottom: 14px; }
+
+/* Врезка-предупреждение или примечание. */
+.note {
+  border-left: 3px solid var(--accent);
+  background: color-mix(in srgb, var(--accent) 7%, transparent);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 16px 20px;
+  margin: 24px 0;
+}
+.note p:last-child { margin-bottom: 0; }
+
+/* Нумерованные шаги инструкции. counter-reset/increment рисуют кружок с
+   номером; ручные «1.», «2.» разъезжаются при вставке шага в середину. */
+.steps { counter-reset: step; list-style: none; padding: 0; margin: 32px 0; }
+.steps > li {
+  counter-increment: step;
+  position: relative;
+  padding-left: 56px;
+  margin-bottom: 28px;
+}
+.steps > li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0; top: -2px;
+  width: 38px; height: 38px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--accent-in);
+  font-weight: 700;
+  font-size: .95rem;
+}
+.steps h3 { margin: 0 0 6px; font-family: var(--font-text); font-size: 1.08rem; }
+
+
+/* ═════════════════════════════════════════════════════════════════════════
+   17б. ЗЕРНО
+   ═════════════════════════════════════════════════════════════════════════
+   Тонкая шумовая плёнка поверх всей страницы. Зачем: идеально гладкая
+   цифровая заливка выглядит стерильно, а лёгкое зерно читается как бумага —
+   ровно та ассоциация, которая нужна сайту про книги.
+
+   Шум — встроенный SVG-фильтр в виде data-URI. Ни одного запроса, около
+   200 байт, и он не растягивается при масштабировании, потому что
+   генерируется, а не рисуется.
+
+   position: fixed + pointer-events: none — плёнка не двигается при прокрутке
+   и не перехватывает ни одного клика. z-index 1 держит её НАД содержимым
+   (у него z-index auto), но ПОД липкой шапкой (z-index 50). */
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: .03;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+
+/* ═════════════════════════════════════════════════════════════════════════
+   17в. ИНДИКАТОР ПРОКРУТКИ
+   ═════════════════════════════════════════════════════════════════════════
+   Полоска толщиной 2 px вверху окна, показывающая, сколько страницы
+   пройдено. На длинной странице это единственный дешёвый способ ответить на
+   вопрос «сколько ещё осталось». Ширину задаёт landing.js. */
+
+.progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  width: 0;
+  z-index: 60;                             /* НАД шапкой (50) */
+  background: linear-gradient(90deg, var(--accent), var(--rose));
+  transition: width .1s linear;
+  pointer-events: none;
+}
+
+
+/* ═════════════════════════════════════════════════════════════════════════
+   17г. ПОЛОСА ЦИФР
+   ═════════════════════════════════════════════════════════════════════════
+   Четыре крупных числа. Все — ПРОВЕРЯЕМЫЕ факты о продукте, а не метрики
+   вроде «100 000 счастливых пользователей», которых у нас нет и которые
+   пришлось бы выдумать. */
+
+.stats {
+  display: grid;
+  gap: 28px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  text-align: center;
+}
+.stats__n {
+  display: block;
+  font-family: var(--font-title);
+  font-size: clamp(2.6rem, 5vw, 4rem);
+  line-height: 1;
+  letter-spacing: -.03em;
+  /* Градиент ПОЧТИ ВЕРТИКАЛЬНЫЙ (165°), а не диагональный.
+     Причина: заливка по тексту растягивается на ширину элемента, а элемент
+     здесь — одна цифра. У диагонального градиента в такую полоску попадала
+     только середина, и все четыре числа выходили одинаково лиловыми. По
+     вертикали же одна цифра высотой в 4rem показывает весь переход: синий
+     сверху, розовый снизу. */
+  background: linear-gradient(165deg, var(--accent), var(--rose));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: var(--accent);                    /* запасной цвет */
+}
+.stats__l {
+  display: block;
+  margin-top: 10px;
+  font-size: .92rem;
+  color: var(--ink-soft);
+  max-width: 22ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+/* ═════════════════════════════════════════════════════════════════════════
+   17д. ЛИПКАЯ СЦЕНА
+   ═════════════════════════════════════════════════════════════════════════
+   Телефон «прилипает» к экрану, а текст рядом прокручивается; при переходе
+   к следующему блоку скриншот на телефоне сменяется.
+
+   Почему так, а не шесть одинаковых блоков «текст + картинка»: шесть
+   одинаковых блоков читаются как шаблон, и человек пролистывает их не
+   читая. Липкая сцена держит один объект на месте и меняет только его
+   содержимое — внимание остаётся на телефоне, а текст идёт мимо.
+
+   ── КАК УСТРОЕНА СМЕНА КАДРА ────────────────────────────────────────────
+   Все скриншоты лежат в экране СРАЗУ, друг на друге, и переключается
+   только прозрачность. Подмена `src` дала бы вспышку пустого экрана на
+   каждом переходе: браузер сначала очищает картинку, потом грузит новую.
+   Здесь же переход — чистая анимация прозрачности, без единой загрузки. */
+
+.scene__grid {
+  display: grid;
+  gap: clamp(28px, 5vw, 72px);
+  align-items: start;
+}
+
+.scene__stage {
+  position: sticky;
+  /* 68 px — высота шапки; ещё 24 px воздуха, чтобы телефон не касался её. */
+  top: 92px;
+  display: flex;
+  justify-content: center;
+}
+
+/* Телефон в сцене мельче, чем в hero: рядом с ним должен помещаться текст, а
+   на узком экране — ещё и остаться место для чтения. Задаём ТУ ЖЕ переменную,
+   от которой считаются радиусы и отступы корпуса, — форма не поплывёт. */
+.scene__stage .phone { --pw: clamp(150px, 30vw, 290px); }
+
+.scene__shot {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity .55s var(--ease);
+  z-index: 1;
+}
+.scene__shot.is-active { opacity: 1; z-index: 2; }
+
+.scene__step {
+  /* Каждый шаг занимает почти экран: так в поле зрения всегда ровно один,
+     и наблюдателю не приходится выбирать между двумя одновременно
+     видимыми. */
+  min-height: 62vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 24px 0;
+  /* Неактивные шаги приглушены — глаз сам находит текущий. */
+  opacity: .38;
+  transition: opacity .45s var(--ease);
+}
+.scene__step.is-active { opacity: 1; }
+
+/* Номер главы. */
+.scene__step .eyebrow { display: flex; align-items: center; gap: 10px; }
+.scene__step .eyebrow::before {
+  content: "";
+  width: 26px; height: 1.5px;
+  background: currentColor;
+  opacity: .6;
+}
+
+@media (min-width: 900px) {
+  .scene__grid { grid-template-columns: 1fr 1fr; }
+  /* Телефон СПРАВА, текст слева: в разметке сцена идёт «текст, сцена»,
+     и на десктопе порядок совпадает с визуальным. */
+}
+
+@media (max-width: 899px) {
+  /* ── ЛИПКОСТЬ НА УЗКОМ ЭКРАНЕ ВЫКЛЮЧЕНА ────────────────────────────────
+     Первая версия оставляла сцену липкой и на телефоне. Выглядело это так:
+     телефон прилипал под шапкой и НАКРЫВАЛ СОБОЙ текст главы — прикреплённый
+     элемент рисуется поверх того, что прокручивается под ним. Половина
+     заголовка «A book on your shelf in four seconds» просто исчезала за
+     корпусом.
+
+     Развести их на 390 px нечем: телефон шириной 150 px и колонка текста
+     рядом дают по 18 символов в строке. Поэтому на узком экране сцена
+     превращается в обычный блок: один телефон сверху, пять глав текстом под
+     ним. Липкая сцена остаётся тем, чем и должна быть, — украшением широкого
+     экрана, а не условием читаемости. */
+  .scene__stage {
+    position: static;
+    order: -1;                             /* телефон над текстом */
+    padding-bottom: 24px;
+  }
+  .scene__step {
+    min-height: 0;
+    padding: 18px 0;
+    /* Приглушение тоже выключено: без липкого телефона активной главы нет,
+       и половина текста читалась бы серым по белому без причины. */
+    opacity: 1;
+  }
+}
+
+
+/* ═════════════════════════════════════════════════════════════════════════
+   17е. СЕТКА ФУНКЦИЙ
+   ═════════════════════════════════════════════════════════════════════════
+   Карточки для того, что не требует скриншота во весь экран. Здесь живут
+   функции, которые в старой версии лендинга отсутствовали вовсе: цитаты,
+   вкусовые теги, лотерея TBR, радар серий и остальные. */
+
+.fgrid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(268px, 1fr));
+}
+
+.fcard {
+  position: relative;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 24px 22px;
+  overflow: hidden;
+  transition: transform .3s var(--ease), border-color .3s var(--ease);
+}
+.fcard:hover { transform: translateY(-4px); border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); }
+
+/* Мягкое цветное свечение в углу карточки — проявляется при наведении. */
+.fcard::after {
+  content: "";
+  position: absolute;
+  top: -40%; right: -30%;
+  width: 70%; aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(50% 50% at 50% 50%,
+              color-mix(in srgb, var(--accent) 26%, transparent), transparent 70%);
+  opacity: 0;
+  transition: opacity .35s var(--ease);
+  pointer-events: none;
+}
+.fcard:hover::after { opacity: 1; }
+
+.fcard__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px; height: 42px;
+  margin-bottom: 16px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  color: var(--accent);
+}
+.fcard__icon svg { width: 21px; height: 21px; }
+
+.fcard h3 {
+  font-family: var(--font-text);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  margin-bottom: 7px;
+}
+.fcard p { font-size: .94rem; color: var(--ink-soft); margin: 0; }
+
+
+/* ═════════════════════════════════════════════════════════════════════════
+   18. ПОЯВЛЕНИЕ ПРИ ПРОКРУТКЕ
+   ═════════════════════════════════════════════════════════════════════════
+   Начальное состояние задаётся ТОЛЬКО когда на <html> висит класс .js — его
+   ставит первая строка landing.js. Без JavaScript класса нет, правило не
+   применяется, и содержимое видно сразу. Если бы .reveal прятал элемент
+   безусловно, отключённый JS оставил бы пустую белую страницу — классическая
+   ошибка, из-за которой сайты пропадают в режиме чтения и у поисковиков.  */
+
+.js .reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .7s var(--ease), transform .7s var(--ease);
+}
+.js .reveal.is-in { opacity: 1; transform: none; }
+
+/* Задержки для эффекта «одно за другим» внутри одной группы.
+   Ступеней ровно две: самая длинная группа на сайте — три карточки. */
+.js .reveal--d1 { transition-delay: .08s; }
+.js .reveal--d2 { transition-delay: .16s; }
+
+
+/* ═════════════════════════════════════════════════════════════════════════
+   19. ДОСТУПНОСТЬ: ОТКЛЮЧЁННОЕ ДВИЖЕНИЕ
+   ═════════════════════════════════════════════════════════════════════════
+   Блок стоит ПОСЛЕДНИМ намеренно: при равной специфичности выигрывает
+   правило, объявленное ниже, поэтому он гарантированно перекрывает всё
+   выше. !important добавлен на случай инлайновых стилей.                   */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+    scroll-behavior: auto !important;
+  }
+  /* Содержимое обязано быть видимым, а не «мгновенно проявиться»: с нулевой
+     длительностью перехода элемент так и остался бы прозрачным, пока
+     наблюдатель не поставит класс. */
+  .js .reveal { opacity: 1; transform: none; }
+  .phone--tilt { transform: none; }
+}
+
+
+/* ═════════════════════════════════════════════════════════════════════════
+   20. ПЕЧАТЬ
+   ═════════════════════════════════════════════════════════════════════════
+   Пресс-кит распечатывают. Без этого блока страница уходит на бумагу с
+   тёмным фоном и липкой шапкой поверх текста.                             */
+
+@media print {
+  .nav, .cta, .badge-appstore, .foot__cols { display: none; }
+  body { background: #fff; color: #000; }
+  .section { padding: 16px 0; }
+  a[href^="http"]::after { content: " (" attr(href) ")"; font-size: .8em; }
+}

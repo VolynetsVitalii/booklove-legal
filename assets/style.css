@@ -66,9 +66,28 @@ header.site {
   align-items: center;
   gap: 10px;
 }
-header.site .mark {                              /* «значок» из эмодзи-сердца книги */
-  font-size: 26px;
-  line-height: 1;
+/* Шапка стала ССЫЛКОЙ на лендинг (T-230). До этого она была двумя мёртвыми
+   строчками: человек, пришедший на Privacy Policy по ссылке из App Store, не
+   имел ни одного способа посмотреть сам продукт. */
+header.site .site-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text);                            /* не синий: это не ссылка
+                                                    внутри текста, а логотип */
+  text-decoration: none;
+}
+header.site .site-nav:hover { text-decoration: none; opacity: .8; }
+
+header.site .mark {                              /* иконка приложения (T-230
+                                                    заменил ею эмодзи 📖:
+                                                    эмодзи рисуется по-разному
+                                                    в каждой ОС и не совпадает
+                                                    с иконкой в App Store) */
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  display: block;
 }
 header.site .name {
   font-weight: 700;
