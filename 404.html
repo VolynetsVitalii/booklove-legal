@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <!--
-  404.html — страница «не найдено» И роутер входящих ссылок. T-230.
+  404.html - страница «не найдено» И роутер входящих ссылок. T-230.
 
   ═════════════════════════════════════════════════════════════════════════════
   ПОЧЕМУ РОУТЕР ЖИВЁТ ИМЕННО ЗДЕСЬ
   ═════════════════════════════════════════════════════════════════════════════
   Приложение раздаёт ссылки вида /b/9780441013593, /wrapped/2026-01,
   /club/ABCD. Ни одного такого файла на диске нет и быть не может: ISBN
-  тринадцать миллионов, и заводить под каждый по .html — не вариант.
+  тринадцать миллионов, и заводить под каждый по .html - не вариант.
 
-  GitHub Pages — статический хостинг без маршрутизации. На любой путь, которому
+  GitHub Pages - статический хостинг без маршрутизации. На любой путь, которому
   не соответствует файл, он отдаёт содержимое 404.html. Это единственная точка,
   через которую статический сайт способен обработать динамический адрес, и
   стандартный приём для одностраничных приложений на Pages.
@@ -18,8 +18,8 @@
   КОГДА ЭТА СТРАНИЦА ВООБЩЕ ПОКАЗЫВАЕТСЯ
   ═════════════════════════════════════════════════════════════════════════════
   Только человеку БЕЗ приложения. Как только Universal Links будут включены
-  (порядок — в LegalPages/README.md), iOS перехватит адрес и откроет книгу
-  прямо в BooksLove, не запрашивая страницу вовсе. То есть эта страница — не
+  (порядок - в LegalPages/README.md), iOS перехватит адрес и откроет книгу
+  прямо в BooksLove, не запрашивая страницу вовсе. То есть эта страница - не
   запасной вариант на случай сбоя, а основной сценарий для того, кому ссылку
   прислал друг.
 
@@ -39,7 +39,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Open in BooksLove</title>
-  <meta name="description" content="Open this book, card or invite in BooksLove — a private book tracker for iPhone and iPad.">
+  <meta name="description" content="Open this book, card or invite in BooksLove - a private book tracker for iPhone and iPad.">
 
   <!-- noindex: адреса /b/<isbn> генерируются на лету, их миллионы, и все они
        ведут на одну и ту же страницу. В индексе такие дубли только вредят. -->
@@ -66,10 +66,10 @@
 
     Причина: страница отдаётся по адресу вроде /booklove-legal/b/9780441013593,
     и относительная ссылка "assets/landing.css" браузер разрешит от папки
-    /booklove-legal/b/ — то есть в несуществующий файл. Страница осталась бы
+    /booklove-legal/b/ - то есть в несуществующий файл. Страница осталась бы
     без стилей ровно в том сценарии, ради которого написана.
 
-    При переезде на собственный домен префикс станет пустым — тогда эти пути
+    При переезде на собственный домен префикс станет пустым - тогда эти пути
     правятся здесь одним поиском-заменой (и BASE в скрипте ниже).
   -->
   <link rel="icon" href="/booklove-legal/assets/favicon.svg" type="image/svg+xml">
@@ -99,10 +99,10 @@
          Четыре взаимоисключающих блока. Скрипт внизу снимает hidden ровно с
          одного. Все четыре размечены СРАЗУ, а не собираются скриптом из
          строк: разметка в HTML читается, проверяется и переводится, а
-         разметка, склеенная в JavaScript, — нет.
+         разметка, склеенная в JavaScript, - нет.
          ═══════════════════════════════════════════════════════════════════ -->
 
-    <!-- ── /b/<isbn> — книга ───────────────────────────────────────────── -->
+    <!-- ── /b/<isbn> - книга ───────────────────────────────────────────── -->
     <div class="article" data-route="b" hidden>
       <p class="eyebrow">Shared book</p>
       <h1>Open this book in BooksLove</h1>
@@ -110,11 +110,11 @@
         Somebody shared a book with you. If BooksLove is already installed, the
         button below opens it straight on the book's page.
       </p>
-      <p class="muted">ISBN <strong data-fill>—</strong></p>
+      <p class="muted">ISBN <strong data-fill>-</strong></p>
 
       <div class="actions" style="margin: 28px 0;">
         <!--
-          data-deeplink — шаблон адреса, в который скрипт подставит значение.
+          data-deeplink - шаблон адреса, в который скрипт подставит значение.
           Схема booklove:// объявлена в Info.plist приложения с T-111 и
           работает НЕЗАВИСИМО от Universal Links: даже пока AASA не подключён,
           эта кнопка открывает приложение у того, у кого оно есть.
@@ -128,14 +128,14 @@
       <div class="note">
         <p>
           Don't have the app? BooksLove is a book tracker for iPhone and iPad
-          with no ads and no account — your library lives on your device and
+          with no ads and no account - your library lives on your device and
           syncs through your own iCloud.
           <a href="/booklove-legal/">See what it does.</a>
         </p>
       </div>
     </div>
 
-    <!-- ── /wrapped/<id> — карточка месяца ─────────────────────────────── -->
+    <!-- ── /wrapped/<id> - карточка месяца ─────────────────────────────── -->
     <div class="article" data-route="wrapped" hidden>
       <p class="eyebrow">Monthly Wrapped</p>
       <h1>Someone shared their reading month</h1>
@@ -156,19 +156,19 @@
       </div>
     </div>
 
-    <!-- ── /club/<code> — приглашение в клуб ───────────────────────────── -->
+    <!-- ── /club/<code> - приглашение в клуб ───────────────────────────── -->
     <!--
       Клубов в приложении НЕТ. Маршрут существует, потому что он объявлен в
       AASA и понимается DeepLinkParser'ом с T-200, и ссылка такого вида может
       появиться в будущем. Показывать по ней бодрое «присоединяйтесь к клубу»
-      было бы обещанием функции, которой нет, — поэтому текст честный.
+      было бы обещанием функции, которой нет, - поэтому текст честный.
     -->
     <div class="article" data-route="club" hidden>
       <p class="eyebrow">Club invite</p>
       <h1>Book clubs aren't out yet</h1>
       <p class="lede" style="max-width: none;">
         This link points at a book club, and BooksLove doesn't have book clubs
-        today. The invite code — <strong data-fill>—</strong> — will keep
+        today. The invite code - <strong data-fill>-</strong> - will keep
         working if clubs are ever built, so hold on to it.
       </p>
       <p>
@@ -184,7 +184,7 @@
       </div>
     </div>
 
-    <!-- ── Всё остальное — обычная 404 ─────────────────────────────────── -->
+    <!-- ── Всё остальное - обычная 404 ─────────────────────────────────── -->
     <!--
       Этот блок ВИДЕН по умолчанию (без атрибута hidden). Если скрипт не
       выполнится вовсе, человек увидит осмысленную страницу с картой сайта, а
@@ -201,13 +201,13 @@
 
       <h2>Everything on this site</h2>
       <ul class="ticks">
-        <li><a href="/booklove-legal/">Home</a> — what BooksLove does</li>
-        <li><a href="/booklove-legal/import-from-goodreads.html">Import from Goodreads</a> — the step-by-step guide</li>
-        <li><a href="/booklove-legal/goodreads-alternative.html">Goodreads alternative</a> — an honest comparison</li>
-        <li><a href="/booklove-legal/reading-tracker.html">Reading tracker guide</a> — six ways to keep a reading log</li>
-        <li><a href="/booklove-legal/wrapped.html">Monthly Wrapped</a> — what the shared cards are</li>
-        <li><a href="/booklove-legal/changelog.html">What's new</a> — every release</li>
-        <li><a href="/booklove-legal/press.html">Press kit</a> — facts, descriptions, screenshots</li>
+        <li><a href="/booklove-legal/">Home</a> - what BooksLove does</li>
+        <li><a href="/booklove-legal/import-from-goodreads.html">Import from Goodreads</a> - the step-by-step guide</li>
+        <li><a href="/booklove-legal/goodreads-alternative.html">Goodreads alternative</a> - an honest comparison</li>
+        <li><a href="/booklove-legal/reading-tracker.html">Reading tracker guide</a> - six ways to keep a reading log</li>
+        <li><a href="/booklove-legal/wrapped.html">Monthly Wrapped</a> - what the shared cards are</li>
+        <li><a href="/booklove-legal/changelog.html">What's new</a> - every release</li>
+        <li><a href="/booklove-legal/press.html">Press kit</a> - facts, descriptions, screenshots</li>
         <li><a href="/booklove-legal/privacy.html">Privacy Policy</a> · <a href="/booklove-legal/terms.html">Terms of Use</a> · <a href="/booklove-legal/support.html">Support</a></li>
       </ul>
     </div>
@@ -230,13 +230,13 @@
   РОУТЕР
   ═══════════════════════════════════════════════════════════════════════════
   Скрипт встроенный, а не отдельным файлом, и БЕЗ defer. Это единственное
-  место на сайте, где так сделано, и на то есть причина: отдельный файл — это
+  место на сайте, где так сделано, и на то есть причина: отдельный файл - это
   ещё один сетевой запрос перед тем, как человек увидит правильный экран, а
   defer отложил бы выполнение до конца разбора документа. Здесь заметно и то,
   и другое: по умолчанию видна страница «404», и чем дольше скрипт молчит, тем
   дольше человек, пришедший по ссылке на книгу, смотрит на слово «404».
 
-  Скрипт стоит в КОНЦЕ body — значит, вся разметка выше уже разобрана и
+  Скрипт стоит в КОНЦЕ body - значит, вся разметка выше уже разобрана и
   querySelectorAll найдёт блоки. Ставить его в <head> без defer нельзя: он
   выполнился бы раньше, чем блоки появятся.
 -->
@@ -267,7 +267,7 @@
     // decodeURIComponent может бросить исключение на битой процентной
     // последовательности («%zz»). Такой адрес в принципе может прийти, и
     // необработанная ошибка оставила бы человека на странице «404» вместо
-    // нужного блока — поэтому берём значение как есть.
+    // нужного блока - поэтому берём значение как есть.
     try {
       id = decodeURIComponent(parts[1] || '');
     } catch (e) {
@@ -288,7 +288,7 @@
       for (var i = 0; i < slots.length; i++) {
         // textContent, а не innerHTML: значение приходит из АДРЕСА, то есть
         // управляется тем, кто прислал ссылку. innerHTML здесь был бы
-        // классической XSS-дырой — достаточно было бы прислать ссылку
+        // классической XSS-дырой - достаточно было бы прислать ссылку
         // /b/<script>… и страница выполнила бы чужой код.
         slots[i].textContent = value;
       }
@@ -303,7 +303,7 @@
     }
 
     // Набор маршрутов совпадает с DeepLinkParser и с AASA. Пустой
-    // идентификатор — не маршрут: «/b/» без ISBN открывать нечего.
+    // идентификатор - не маршрут: «/b/» без ISBN открывать нечего.
     if ((route === 'b' || route === 'wrapped' || route === 'club') && id) {
       fill(id);
       show(route);
@@ -311,7 +311,7 @@
       show('none');
     }
 
-    // Год в подвале — та же мелочь, что и на остальных страницах. Здесь она
+    // Год в подвале - та же мелочь, что и на остальных страницах. Здесь она
     // сделана прямо тут, потому что landing.js эта страница не подключает.
     var yearSlots = document.querySelectorAll('[data-year]');
     for (var k = 0; k < yearSlots.length; k++) {

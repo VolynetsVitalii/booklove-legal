@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <!--
-  import-from-goodreads.html — SEO-страница инструкционного намерения. T-230.
+  import-from-goodreads.html - SEO-страница инструкционного намерения. T-230.
 
   ── КАКОЙ ЗАПРОС ОНА ЛОВИТ ──────────────────────────────────────────────────
   «import goodreads library», «goodreads csv export», «move books from
-  goodreads». Здесь человек не выбирает приложение — он уже решил и ищет, КАК.
+  goodreads». Здесь человек не выбирает приложение - он уже решил и ищет, КАК.
   Поэтому страница начинается не с рекламы, а с первого шага.
 
   ── ПОЧЕМУ ЭТО ОТДЕЛЬНАЯ СТРАНИЦА, А НЕ РАЗДЕЛ ЛЕНДИНГА ────────────────────
   У запросов «goodreads alternative» и «how to import from goodreads» разное
   намерение: первый выбирает, второй уже действует. Одна страница на оба
-  ранжируется хуже по обоим — поисковик не понимает, что она вообще решает.
+  ранжируется хуже по обоим - поисковик не понимает, что она вообще решает.
   Две страницы с явной перелинковкой закрывают обе воронки, и это не
   каннибализация, а разделение намерений.
 
@@ -54,7 +54,7 @@
   <script defer src="assets/landing.js"></script>
 
   <!--
-    JSON-LD типа HowTo. Google понимает из него, что страница — пошаговая
+    JSON-LD типа HowTo. Google понимает из него, что страница - пошаговая
     инструкция, и может показать шаги прямо в выдаче. Названия шагов ДОЛЖНЫ
     совпадать с заголовками на странице: расхождение Google трактует как
     попытку подсунуть разметку, не соответствующую содержимому.
@@ -140,7 +140,7 @@
           <h3>Download the CSV file</h3>
           <p>
             A few minutes later Goodreads emails you a link, and the same page
-            shows a dated download link at the top. Save the file — it is called
+            shows a dated download link at the top. Save the file - it is called
             something like <em>goodreads_library_export.csv</em>. On an iPhone,
             save it into <strong>Files</strong> so the app can reach it; iCloud
             Drive works well here.
@@ -159,7 +159,7 @@
           <h3>Pick the file, then say where it came from</h3>
           <p>
             Tap <strong>Choose CSV File</strong> and select the export. The app
-            then asks <strong>“Where is this file from?”</strong> — choose
+            then asks <strong>“Where is this file from?”</strong> - choose
             <strong>Goodreads</strong>. This is not a formality: each service
             names its columns differently, and picking the right one is what
             lets the app read your shelves, ratings and reading dates instead
@@ -171,8 +171,8 @@
           <h3>Check the preview, then start</h3>
           <p>
             Before anything is written, you see how many books were found,
-            <strong>“Where they’ll go”</strong> — the count landing on each
-            shelf — and <strong>“What this file can’t bring”</strong>, which
+            <strong>“Where they’ll go”</strong> - the count landing on each
+            shelf - and <strong>“What this file can’t bring”</strong>, which
             lists honestly what Goodreads left out of the export. If the numbers
             look wrong, <strong>“Choose a different app”</strong> or
             <strong>“Choose a different file”</strong> takes you back. When it
@@ -184,7 +184,7 @@
           <h3>Read the summary and finish the job</h3>
           <p>
             The summary tells you how many books were added and which ones need
-            attention — usually a handful the catalogue could not match by ISBN.
+            attention - usually a handful the catalogue could not match by ISBN.
             <strong>“Fix my library”</strong> walks through them one at a time:
             missing covers, missing finish dates, books that need a manual
             match. Nothing disappears quietly, and nothing is left half-done
@@ -226,9 +226,9 @@
           <tr><th scope="row">Your star rating</th><td class="yes">Yes</td></tr>
           <tr><th scope="row">Date added and date read</th><td class="yes">Yes, when Goodreads recorded them</td></tr>
           <tr><th scope="row">Your written review and private notes</th><td class="yes">Yes</td></tr>
-          <tr><th scope="row">Cover images</th><td class="no">Not in the export — fetched from the catalogue instead</td></tr>
+          <tr><th scope="row">Cover images</th><td class="no">Not in the export - fetched from the catalogue instead</td></tr>
           <tr><th scope="row">Start dates</th><td class="no">Goodreads does not export them</td></tr>
-          <tr><th scope="row">Friends, likes, comments, groups</th><td class="no">Not imported — there is nowhere for them to go</td></tr>
+          <tr><th scope="row">Friends, likes, comments, groups</th><td class="no">Not imported - there is nowhere for them to go</td></tr>
         </tbody>
       </table>
     </div>
