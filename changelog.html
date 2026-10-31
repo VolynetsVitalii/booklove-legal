@@ -14,10 +14,23 @@
      заходят на неё регулярно, а через неё - на весь сайт.
 
   ── ПРАВИЛО ЗАПОЛНЕНИЯ ──────────────────────────────────────────────────────
-  Сюда попадает только ВЫШЕДШЕЕ. Раздел «в работе» помечен явно и не содержит
-  дат: обещанная и сорванная дата вредит доверию сильнее, чем её отсутствие.
-  Тексты выпущенных версий берутся из fastlane/metadata/en-US/release_notes.txt
-  того релиза - расхождение между магазином и сайтом здесь заметнее всего.
+  Дату и магазинный текст получает только ВЫШЕДШЕЕ. Тексты выпущенных версий
+  берутся из fastlane/metadata/en-US/release_notes.txt того релиза -
+  расхождение между магазином и сайтом здесь заметнее всего.
+
+  Номер СЛЕДУЮЩЕЙ версии появляется на странице раньше релиза, и это не
+  ошибка. Scripts/landing-audit.sh (проверка H) требует, чтобы здесь был
+  раздел с MARKETING_VERSION проекта, а версия в проекте поднимается в день
+  одобрения предыдущей: иначе Xcode Cloud отбивает каждый билд (ITMS-90186).
+  Между одобрением 1.1.0 и выходом 1.2.0 проходят месяцы. Поэтому раздел
+  «в работе» внизу страницы носит номер будущей версии, помечен явно как
+  невыпущенный и не содержит дат: обещанная и сорванная дата вредит доверию
+  сильнее, чем её отсутствие (T-661). В нём только то, что уже собрано и
+  работает на тестовых устройствах, одной строкой - что ещё не готово.
+  В день релиза блок переезжает наверх, к выпущенным, подпись меняется на
+  магазинную, список сверяется с release_notes.txt. И СРАЗУ ЖЕ внизу
+  заводится новый раздел «Being built» под следующий номер: версия в проекте
+  поднимается в тот же день, и без этого раздела проверка H снова красная.
 -->
 <html lang="en">
 <head>
@@ -134,16 +147,27 @@
 <section class="section">
   <div class="wrap">
     <div class="article reveal">
-      <h2>Being worked on</h2>
+      <h2>Version 1.2.0</h2>
+      <p class="muted">Being built. Not in the App Store yet, and deliberately without a date</p>
       <p>
-        Not released yet, and deliberately without a date. This is what the next
-        version is about rather than a complete list.
+        The next version is about finding your next book inside your own
+        shelves rather than in a chart of what everyone else read. Everything
+        below already works on the test devices. The day it ships, this block
+        moves up to join the released versions.
       </p>
       <ul class="ticks">
-        <li>A way to find your next book that leans on your own shelves rather than on a chart of what everyone else read</li>
-        <li>A yearly Wrapped to go with the monthly one, and a friendlier way to look through both</li>
-        <li>Picking the genres you care about while setting the app up, so the first suggestions are not guesses</li>
+        <li>A Discover tab: one book at a time, drawn from what your shelves and ratings say you like, with a line on why it was picked. Swipe it away, or add it to your to-read pile</li>
+        <li>A Daily Mix that changes every day, and three badges for the curious: Explorer, Book Worm and Genre Hopper</li>
+        <li>Pick the genres you care about while setting the app up, so the first suggestions are not guesses</li>
+        <li>A new look on every screen: four tabs, covers first, and the colour of the cover spreading behind the book page and the reading timer</li>
+        <li>Statistics switch between this year, all time and your streak, and the profile shows how long you have been reading with the app</li>
+        <li>Monthly Wrapped plays as a full-screen story, and each month&rsquo;s cards are kept so you can go back to them</li>
+        <li>Every quote remembers whether it was typed in or captured with the camera</li>
       </ul>
+      <p>
+        Still being built for the same version: a yearly Wrapped to go with the
+        monthly one.
+      </p>
 
       <div class="note">
         <p>
